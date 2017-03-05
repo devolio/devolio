@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block head_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+    <link rel="stylesheet" href="/static/website/style.css">
+    <script src="https://use.typekit.net/onc4rxd.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  </head>
+  <body>
+    {% block body %}
+    <h1 class="tk-europa">Devolio</h1>
+    {% if messages %}
+      <div>
+        <strong>Messages:</strong>
+        <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+
+    <ul>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'account_email' %}">Change email</a></li>
+      <li><a href="{% url 'account_logout' %}">Sign out</a></li>
+      {% else %}
+      <li><a href="{% url 'account_login' %}">Login</a></li>
+      <li><a href="{% url 'account_signup' %}">Sign up</a></li>
+      {% endif %}
+    </ul>
+
+    {% block content %}
+    {% endblock %}
+
+    {% endblock %}
+
+  </body>
+</html>

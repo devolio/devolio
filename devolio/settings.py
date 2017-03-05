@@ -30,7 +30,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 DEVOLIO_APPS = [
-    'website'
+    'website',
+    'users'
+]
+
+THIRD_PARTY_APPS = [
+    'allauth',
+    'allauth.account'
 ]
 
 INSTALLED_APPS = [
@@ -40,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-] + DEVOLIO_APPS
+    # DJ Site framework, added for 'django-allauth'
+    'django.contrib.sites'
+] + DEVOLIO_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +65,7 @@ ROOT_URLCONF = 'devolio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Added for 'django-allauth'
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -121,3 +134,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Site ID, added for 'django-allauth'
+SITE_ID = 1
+
+# Allauth settings:
+# see https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_ADAPTER = 'users.allauth.AccountAdapter'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_VERIFICATION = 'none' # TODO: use 'mandatory' with email backend
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_MIN_LENGTH = 3

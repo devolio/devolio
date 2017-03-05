@@ -2,11 +2,23 @@
     <head>
         <meta charset="utf-8">
         <title>Hello to the new Devolio</title>
+        <script src="https://use.typekit.net/onc4rxd.js"></script>
+        <script>try{Typekit.load({ async: true });}catch(e){}</script>
         <link rel="stylesheet" href="/static/website/style.css">
     </head>
     <body>
-        <h1>Devolio</h1>
+        <img src="/static/website/logo_256.png" width="70" alt="Devolio Logo">
+        <h1 class="tk-europa">Devolio</h1>
         <h2>For the Developers!</h2>
         <p>Devolio is a community and a group of services offered to programmers for free.</p>
+        <ul>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'me' %}">{{user}}</a></li>
+            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'account_signup' %}">Sign up</a></li>
+            <li><a href="{% url 'account_login' %}">Login</a></li>
+            {% endif %}
+        </ul>
     </body>
 </html>
