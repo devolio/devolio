@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'q5*qnv(4+d5^xnp71+!tut33-ccbzm%i&qn$g*p+6oepir*+!1'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 DEVOLIO_APPS = [
     'website',
-    'users'
+    'users',
+    'hellocode'
 ]
 
 THIRD_PARTY_APPS = [

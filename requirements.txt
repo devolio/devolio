@@ -1,7 +1,11 @@
+click==6.7
 defusedxml==0.5.0
 Django==1.10.6
 django-allauth==0.31.0
+gunicorn==19.7.0
+invoke==0.15.0
 oauthlib==2.0.1
+python-dotenv==0.6.3
 python3-openid==3.1.0
 requests==2.13.0
 requests-oauthlib==0.8.0
