@@ -1,0 +1,1 @@
+web: gunicorn devolio.wsgi --log-file -
