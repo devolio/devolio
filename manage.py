@@ -2,7 +2,7 @@
 import os
 import sys
 
-if !os.environ.get('HEROKU_RT'):
+if not os.environ.get('HEROKU_RT'):
     # .env module
     from dotenv import load_dotenv, find_dotenv
     load_dotenv(find_dotenv())
