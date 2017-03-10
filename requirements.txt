@@ -1,5 +1,6 @@
 click==6.7
 defusedxml==0.5.0
+dj-database-url==0.4.2
 Django==1.10.6
 django-allauth==0.31.0
 gunicorn==19.7.0
