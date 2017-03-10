@@ -92,6 +92,11 @@ DATABASES = {
     }
 }
 
+# if DATABASE_URL, DB settings with get overwritten (Heroku settings)
+if os.environ.get('DATABASE_URL'):
+    import dj_database_url
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
