@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+import hellocode
 from website import views as wv
 from users import views as uv
 
@@ -22,5 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('allauth.urls')),
     url(r'^me', uv.me, name='me'),
-    url(r'^$', wv.index, name='name')
+    url(r'^hellocode/', include('hellocode.urls')),
+    url(r'^$', wv.index, name='ws_index')
 ]
