@@ -7,3 +7,7 @@ For the millionth time I'm trying to reboot/refactor/restructure **Devolio**...
 3. [http://127.0.0.1:8000/](http://127.0.0.1:8000/)  
   
 **Currently it just shows a boring welcome page. More to come soon.**
+
+## Todos:  
+- [] fix static on heroku.
+- [] use whitenoise
