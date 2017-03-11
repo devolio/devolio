@@ -3,22 +3,55 @@
         <meta charset="utf-8">
         <title>Hello to the new Devolio</title>
         <script src="https://use.typekit.net/onc4rxd.js"></script>
+        <!--<link href="https://fonts.googleapis.com/css?family=Space+Mono:700|Ubuntu+Mono:700&text=HelloCodeDevChatQuestions" rel="stylesheet">-->
         <script>try{Typekit.load({ async: true });}catch(e){}</script>
         <link rel="stylesheet" href="/static/website/style.css">
     </head>
     <body>
-        <img src="/static/website/logo_256.png" width="70" alt="Devolio Logo">
-        <h1 class="tk-europa">Devolio</h1>
+        <header>
+            <div class="brand">
+                <img src="/static/website/logo_256.png" alt="Devolio Logo" class="logo">
+                <h1 class="tk-europa">Devolio</h1>
+            </div>
+            <div class="nav">
+                {% if user.is_authenticated %}
+                <a href="{% url 'me' %}">{{user.username}}</a>
+                {% else %}
+                <a href="{% url 'account_login' %}">Login</a>
+                {% endif %}
+            </div>
+
+        </header>
+
         <h2>For the Developers!</h2>
         <p>Devolio is a community and a group of services offered to programmers for free.</p>
-        <ul>
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'me' %}">{{user}}</a></li>
-            <li><a href="{% url 'account_logout' %}">Logout</a></li>
-            {% else %}
-            <li><a href="{% url 'account_signup' %}">Sign up</a></li>
-            <li><a href="{% url 'account_login' %}">Login</a></li>
-            {% endif %}
-        </ul>
+        {% if user.is_authenticated %}
+        <a href="{% url 'account_logout' %}">Logout!</a>
+        {% else %}
+        <a href="{% url 'account_signup' %}">👋🏼 Sign up!</a>
+        {% endif %}
+        <div class="project-cards">
+            <div class="project-card hellocode-card">
+                <h2>HelloCode</h2>
+                <p>HelloCode is a place where developers (beginners too) find and collaborate on open source projects.</p>
+                <a href="/hellocode/" class="card-link">Join +2500 developers!</a>
+            </div>
+            <div class="project-card devchat-card">
+                <h2>DevChat</h2>
+                <p>We are a very friendly group of software developers who come together to solve problems and learn.</p>
+                <a href="/devchat/" class="card-link">Join +4600 developers!</a>
+            </div>
+            <div class="project-card questions-card">
+                <h2>Questions</h2>
+                <p>Ask your programming questions without being judged.</p>
+                <a href="/questions/" class="card-link">Join +4600 developers!</a>
+            </div>
+            <div class="project-card discover-card">
+                <h2>Discover</h2>
+                <p>Discover and find developers and projects.</p>
+                <a href="/discover/" class="card-link">Discover +6000 developers and +1000 projects!</a>
+            </div>
+        </div>
+
     </body>
 </html>

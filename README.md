@@ -9,5 +9,4 @@ For the millionth time I'm trying to reboot/refactor/restructure **Devolio**...
 **Currently it just shows a boring welcome page. More to come soon.**
 
 ## Todos:  
-- [] fix static on heroku.
-- [] use whitenoise
+See issues.
