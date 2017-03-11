@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJ_DEBUG', True)
 
-ALLOWED_HOSTS = ['*.devolio.net', 'devolioapp.herokuapp.com']
+ALLOWED_HOSTS = ['next.devolio.net', 'devolioapp.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+
+    # This is fot WhiteNoise but it should 
+    # come brfore 'django.contrib.staticfiles'
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     # DJ Site framework, added for 'django-allauth'
     'django.contrib.sites'
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -148,8 +153,11 @@ STATICFILES_FINDERS = [
 #     os.path.join(BASE_DIR, 'static'),
 # ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')
+STATIC_URL = STATIC_HOST + '/static/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Site ID, added for 'django-allauth'
 SITE_ID = 1

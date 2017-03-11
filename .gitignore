@@ -100,7 +100,7 @@ ENV/
 .DS_Store
 
 media/
-static/
+staticfiles/
 
 .vscode/
 .env
