@@ -1,4 +1,4 @@
-{% extends "account/base.html" %}
+{% extends "website/base.html" %}
 {% load account %}
 
 {% block head_title %}Devolio - Login{% endblock %}
@@ -10,7 +10,7 @@
 <a href="{{ signup_url }}">sign up</a> first.</p>
 
 
-<form class="login" method="POST" action="{% url 'account_login' %}">
+<form class="form" method="POST" action="{% url 'account_login' %}">
   {% csrf_token %}
   {{ form.as_p }}
   {% if redirect_field_value %}

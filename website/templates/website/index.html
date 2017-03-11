@@ -1,28 +1,5 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Hello to the new Devolio</title>
-        <script src="https://use.typekit.net/onc4rxd.js"></script>
-        <!--<link href="https://fonts.googleapis.com/css?family=Space+Mono:700|Ubuntu+Mono:700&text=HelloCodeDevChatQuestions" rel="stylesheet">-->
-        <script>try{Typekit.load({ async: true });}catch(e){}</script>
-        <link rel="stylesheet" href="/static/website/style.css">
-    </head>
-    <body>
-        <header>
-            <div class="brand">
-                <img src="/static/website/logo_256.png" alt="Devolio Logo" class="logo">
-                <h1 class="tk-europa">Devolio</h1>
-            </div>
-            <div class="nav">
-                {% if user.is_authenticated %}
-                <a href="{% url 'me' %}">{{user.username}}</a>
-                {% else %}
-                <a href="{% url 'account_login' %}">Login</a>
-                {% endif %}
-            </div>
-
-        </header>
-
+{% extends "website/base.html" %}
+{% block content %}
         <h2>For the Developers!</h2>
         <p>Devolio is a community and a group of services offered to programmers for free.</p>
         {% if user.is_authenticated %}
@@ -52,6 +29,4 @@
                 <a href="/discover/" class="card-link">Discover +6000 developers and +1000 projects!</a>
             </div>
         </div>
-
-    </body>
-</html>
+{% endblock %}
