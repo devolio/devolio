@@ -1,0 +1,13 @@
+language: python
+python:
+  - 3.4
+  - 3.6
+before_install:
+  - apt-get -qq update
+  - apt-get install -y --no-install-recommends build-essential 
+  - apt-get install -y --no-install-recommends python3-dev 
+  - apt-get install -y --no-install-recommends libffi-dev
+install:
+  - pip install -r requirements.txt
+script:
+  - python manage.py migrate
