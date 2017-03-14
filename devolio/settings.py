@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', '97C%k7bxb8f3@UKV7BTHqdXWrkSRk^CMYyxSX@WNept')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJ_DEBUG', True)
@@ -32,12 +32,14 @@ ALLOWED_HOSTS = ['next.devolio.net', 'devolioapp.herokuapp.com', '127.0.0.1', 'l
 DEVOLIO_APPS = [
     'website',
     'users',
-    'hellocode'
-]
+    'hellocode',
+    'questions'
+    ]
 
 THIRD_PARTY_APPS = [
     'allauth',
-    'allauth.account'
+    'allauth.account',
+    'taggit'
 ]
 
 INSTALLED_APPS = [

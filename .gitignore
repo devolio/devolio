@@ -103,4 +103,4 @@ media/
 staticfiles/
 
 .vscode/
-.env
+.idea/
