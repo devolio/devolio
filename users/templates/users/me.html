@@ -1,1 +1,29 @@
-hi, {{user}}
+{% extends "website/base.html" %}
+
+{% block content %}
+
+<div>
+    <h3>
+        Your username
+    </h3>
+    <p>{{user}}</p>
+
+    {% if skills%}
+    <ul>
+        {%  for skill in skills %}
+        <li>{{ skill.name|title }} ({{ skill.level|title }})</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h3>
+        Are you part of HelloCode?
+    </h3>
+    {% if coder %}<p>Yes</p>{% else %}<p>No</p>{% endif %}
+
+</div>
+
+
+
+
+{% endblock %}

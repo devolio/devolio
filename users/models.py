@@ -6,10 +6,10 @@ class Skill(models.Model):
     """User Skills: takes a user, a skill and a level"""
 
     LEVEL_CHOICES = (
-        ('Beginner', 'Beginner'),
-        ('Intermediate', 'Intermediate'),
-        ('Advanced', 'Advanced'),
-        ('Expert', 'Expert')
+        ('beginner', 'Beginner'),
+        ('intermediate', 'Intermediate'),
+        ('advanced', 'Advanced'),
+        ('expert', 'Expert')
         )
 
     user = models.ForeignKey(User)
