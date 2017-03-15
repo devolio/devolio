@@ -38,4 +38,4 @@ class Question(models.Model):
         super(Question, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return f'/q/{self.slug}'
+        return '/q/{}'.format(self.slug)
