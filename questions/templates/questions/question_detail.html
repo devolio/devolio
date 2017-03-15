@@ -1,0 +1,19 @@
+{% extends "website/base.html"%}
+{% block content %}
+
+<div>
+  <h1 class="question-headline">{{object.title}}</h1>
+  <div class="question-body">
+    {{object.body_html | safe}}
+  </div>
+  <div class="question-meta">
+    <div class="q-meta">By <a href="#">@{{object.author}}</a> on {{object.created|date:"D d M Y"}} | <a href="/q/{{object.slug}}/edit">edit</a>
+    </div>
+  </div>
+  <div class="q-meta-tags">
+  {% for tag in object.tags.all %}
+  <a class="q-meta-tag" href="/tags/{{tag.slug}}">{{tag.name}}</a>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

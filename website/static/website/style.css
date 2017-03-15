@@ -85,13 +85,14 @@ form > p {
     width: 100%;
 }
 
-[type="text"], [type="password"], [type="email"] {
+[type="text"], [type="password"], [type="email"], textarea {
     display: block;
     padding: 10px;
     margin: 10px 0px;
     width: 50%;
     border: 1px solid #eee;
 }
+
 [type="text"]:focus, [type="password"]:focus, [type="email"]:focus {
     border: 1px solid #ccc;
 }

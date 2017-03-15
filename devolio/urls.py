@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^users/', include('allauth.urls')),
     url(r'^me', uv.me, name='me'),
     url(r'^hellocode/', include('hellocode.urls')),
+    url(r'^q/', include('questions.urls')),
     url(r'^$', wv.index, name='ws_index')
 ]

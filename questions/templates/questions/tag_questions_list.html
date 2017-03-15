@@ -1,0 +1,20 @@
+{% extends "website/base.html"%}
+
+{% block content %}
+  </div>
+  <div>
+    <h1 class="page-headline">987 question using the tag: <span class="tag-in-headline">python</span></h1>
+    <div class="q-list-wrapper">
+
+        {% for ques in object_list %}
+        <a class="q-list-item w-inline-block" href="/q/{{ques.slug}}">
+            <h3>{{ ques.title | title }}</h3>
+            <div class="q-list-item-meta">0 Answers | By @{{ques.author}} {{object.created|date:"D d M Y"}}</div>
+        </a>
+        {% endfor %}
+
+      <div class="q-list-pagination"><a class="pagi-btn w-button" href="#">« Previous</a><a class="pagi-btn w-button" href="#">Next »</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -32,7 +32,8 @@ ALLOWED_HOSTS = ['next.devolio.net', 'devolioapp.herokuapp.com', '127.0.0.1', 'l
 DEVOLIO_APPS = [
     'website',
     'users',
-    'hellocode'
+    'hellocode',
+    'questions'
     ]
 
 THIRD_PARTY_APPS = [

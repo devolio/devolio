@@ -1,0 +1,11 @@
+{% extends "website/base.html"%}
+{% block content %}
+  <div>
+    <h1>Select the tag, it's questions you want to discover.</h1>
+    <div>
+        {% for tag in object_list%}
+            <a href="/tags/{{tag.slug}}">{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+  </div>
+{% endblock %}
