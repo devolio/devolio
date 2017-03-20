@@ -2,11 +2,11 @@
     <head>
         <meta charset="utf-8">
         <title>{% block head_title %}Welcome to the new Devolio{% endblock %}</title>
-        {% comment %}<script src="https://use.typekit.net/onc4rxd.js"></script>{% endcomment %}
-        <!--<link href="https://fonts.googleapis.com/css?family=Space+Mono:700|Ubuntu+Mono:700&text=HelloCodeDevChatQuestions" rel="stylesheet">-->
+        <script src="https://use.typekit.net/onc4rxd.js"></script>
         <script>try{Typekit.load({ async: true });}catch(e){}</script>
         <link rel="stylesheet" href="/static/website/normalize.css">
         <link rel="stylesheet" href="/static/website/style.css">
+        <link rel="stylesheet" href="/static/website/prism.css">
     </head>
     <body>
         <header>
@@ -18,7 +18,7 @@
                 {% if user.is_authenticated %}
                 <a href="{% url 'me' %}">{{user.username}}</a>
                 {% else %}
-                <a href="{% url 'account_login' %}">My Console</a>
+                <a href="{% url 'account_login' %}">💻 Terminal</a>
                 {% endif %}
             </div>
 
@@ -26,5 +26,6 @@
 
         {% block content %}
         {% endblock %}
+        <script src="/static/website/prism.js"></script>
     </body>
 </html>

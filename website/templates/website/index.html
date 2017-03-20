@@ -1,32 +1,18 @@
 {% extends "website/base.html" %}
 {% block content %}
-        <h2>For the Developers!</h2>
-        <p>Devolio is a community and a group of services offered to programmers for free.</p>
+        <h2>Let's learn to code, together!⛵️</h2>
+        <p>You found a place where a bunch of programmers from very level are helping eachother to become better programmers.</p>
+
+
         {% if user.is_authenticated %}
         <a href="{% url 'account_logout' %}">Logout!</a>
         {% else %}
-        <a href="{% url 'account_signup' %}">👋🏼 Sign up!</a>
+        <a class="btn" href="{% url 'account_signup' %}">👋 Join now and ask!</a>
+        <p>Here's what makes <strong>Devolio</strong> special:</p>
+        <ul>
+            <li>Beginner, starter, noob? All welcome!</li>
+            <li>We do not care about how many times a question was asked. We want YOU to understand the solution!</li>
+            <li>All questions are stupid, so keep'em coming.</li>
+        </ul>
         {% endif %}
-        <div class="project-cards">
-            <div class="project-card hellocode-card">
-                <h2>HelloCode</h2>
-                <p>HelloCode is a place where developers (beginners too) find and collaborate on open source projects.</p>
-                <a href="/hellocode/" class="card-link">Join +2500 developers!</a>
-            </div>
-            <div class="project-card devchat-card">
-                <h2>DevChat</h2>
-                <p>We are a very friendly group of software developers who come together to solve problems and learn.</p>
-                <a href="/devchat/" class="card-link">Join +4600 developers!</a>
-            </div>
-            <div class="project-card questions-card">
-                <h2>Questions</h2>
-                <p>Ask your programming questions without being judged.</p>
-                <a href="/questions/" class="card-link">Join +4600 developers!</a>
-            </div>
-            <div class="project-card discover-card">
-                <h2>Discover</h2>
-                <p>Discover and find developers and projects.</p>
-                <a href="/discover/" class="card-link">Discover +6000 developers and +1000 projects!</a>
-            </div>
-        </div>
 {% endblock %}
