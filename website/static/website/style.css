@@ -146,3 +146,11 @@ button, [type="submit"], .button {
 .question-body h1{
     font-size: 1.7em;
 }
+
+.response {
+    background-color: #f9f9f9;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+

@@ -13,4 +13,8 @@ First make sure docker is running and then do:
 
 ## Todos
 
+- fix perms, partial
+- fix user when saving question, done
+- add id to question slug
+
 See issues.

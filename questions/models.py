@@ -31,7 +31,8 @@ class Question(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.user = User.objects.get(pk=1)
+        # # TODO
+        # self.user = User.objects.get(pk=1)
         self.body_html = mistune.markdown(self.body_md)
         if not self.slug:
             unique_slugify(self, self.title)
@@ -39,3 +40,27 @@ class Question(models.Model):
 
     def get_absolute_url(self):
         return '/q/{}'.format(self.slug)
+
+
+class Response(models.Model):
+    user = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+
+    body_md = models.TextField('Response body (Markdown)', blank=True)
+    body_html = models.TextField(blank=True)
+
+    spam = models.BooleanField(default=False)
+    answer = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False)
+
+    date_added = models.DateTimeField(auto_now_add=True, null=True, blank=True,
+                                      editable=False, verbose_name='Date added')
+    last_modified = models.DateTimeField(auto_now=True, null=True, blank=True,
+                                         verbose_name='Last modified')
+
+    def save(self, *args, **kwargs):
+        self.body_html = mistune.markdown(self.body_md)
+        super(Response, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return self.user

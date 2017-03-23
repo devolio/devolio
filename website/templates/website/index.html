@@ -15,4 +15,13 @@
             <li>All questions are stupid, so keep'em coming.</li>
         </ul>
         {% endif %}
+
+        <div>
+            <h1>All questions:</h1>
+            <ul>
+                {% for q in questions%}
+                <li><a href="/q/{{q.slug}}">{{q.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
 {% endblock %}
