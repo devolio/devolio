@@ -1,0 +1,33 @@
+.section1 {
+  background-image: -webkit-linear-gradient(225deg, #3b9dd8, #2a4fd4);
+  background-image: linear-gradient(225deg, #3b9dd8, #2a4fd4);
+}
+
+.logo {
+  background-image: url(/static/shared/img/devolio.svg);
+}
+
+.join-button {
+    display: block;
+    width: 230px;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 3px;
+    background-color: #f7ea4f;
+    box-shadow: 0 12px 60px -14px #378100;
+    -webkit-transition: all 300ms ease-out;
+    transition: all 300ms ease-out;
+    font-family: monospace;
+    color: #3f3f3f;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.form-wrapper {
+    height: auto;
+    margin-bottom: 30px;
+}

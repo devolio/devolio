@@ -1,27 +1,85 @@
-{% extends "shared/base.html" %}
-{% block content %}
-        <h2>Let's learn to code, together!⛵️</h2>
-        <p>You found a place where a bunch of programmers from very level are helping eachother to become better programmers.</p>
+<!DOCTYPE html> {% load staticfiles %}
+<html>
 
+<head>
+    <meta charset="utf-8">
+    <title>Devolio - The open community for developers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'shared/css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'website/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'website/css/devolio.css' %}">
+    <script src="https://use.typekit.net/onc4rxd.js"></script>
+    <script>
+    try {
+        Typekit.load({
+            async: true
+        });
+    } catch (e) {}
+    </script>
+</head>
 
-        {% if user.is_authenticated %}
-        <a href="{% url 'account_logout' %}">Logout!</a>
-        {% else %}
-        <a class="btn" href="{% url 'account_signup' %}">👋 Join now and ask!</a>
-        <p>Here's what makes <strong>Devolio</strong> special:</p>
-        <ul>
-            <li>Beginner, starter, noob? All welcome!</li>
-            <li>We do not care about how many times a question was asked. We want YOU to understand the solution!</li>
-            <li>All questions are stupid, so keep'em coming.</li>
-        </ul>
-        {% endif %}
-
-        <div>
-            <h1>All questions:</h1>
-            <ul>
-                {% for q in questions%}
-                <li><a href="{% url 'q_detail' q.slug %}">{{q.title}}</a></li>
-                {% endfor %}
-            </ul>
+<body>
+    <div class="w-section section1">
+        <div class="w-clearfix login-container">
+            <div class="login">Already a member?</div><a href="{% url 'account_login' %}" class="w-button login login-button">Login</a>
         </div>
-{% endblock %}
+        <div class="w-container container1">
+            <div class="logo"></div>
+            <h1 class="h1"><span class="devchat">Devolio</span> - The open community for developers</h1>
+            <h2 class="h2">Ask and answer programming related questions in a friendly enviroment!</h2>
+            <div class="w-form form-wrapper">
+                <input id="btn" type="submit" value="Join now!" data-wait="Please wait..." class="w-button join-button">
+                <div class="coc-link">By joining Devolio you agree to follow our <a href="https://devchat.devolio.net/rules.txt">rules</a>.</div>
+            </div>
+            <div class="table">
+                <div class="w-row row">
+                    <div class="w-col w-col-4">
+                        <h3 class="h3">What's Devolio</h3>
+                    </div>
+                    <div class="w-col w-col-8">
+                        <p class="table-text">Devolio is a place where a bunch of programmers from very level are helping eachother to become better programmers.</p>
+                    </div>
+                </div>
+                <div class="w-row row">
+                    <div class="w-col w-col-4">
+                        <h3 class="h3">What makes Devolio special?</h3>
+                    </div>
+                    <div class="w-col w-col-8">
+                    <ul class="list">
+                        <li>Beginner, starter, noob? All welcome!</li>
+                        <li>We do not care about how many times a question was asked. We want YOU to understand the solution!</li>
+                        <li>All questions are stupid, so keep'em coming.</li>
+                    </ul>
+                    </div>
+                </div>
+                <div class="w-row row">
+                    <div class="w-col w-col-4">
+                        <h3 class="h3">What's in it for me?</h3>
+                    </div>
+                    <div class="w-col w-col-8">
+                        <p class="table-text">We give away free knowledge and help. We're a very friendly community, open to and respectful of every programming language, level of experience, age, time zone, gender, etc, etc.</p>
+                    </div>
+                </div>
+                <div class="w-row row">
+                    <div class="w-col w-col-4">
+                        <h3 class="h3">Do you have other links?</h3>
+                    </div>
+                    <div class="w-col w-col-8">
+                        <p class="table-text"><a target="_blank" data-rt-link-type="external" class="link" href="https://twitter.com/_devolio">Twitter</a>,&nbsp;<a data-rt-link-type="external" target="_blank" class="link" href="https://www.reddit.com/r/devolio/">Reddit</a> and <a target="_blank" href="https://github.com/devolio">GitHub</a>.</p>
+                    </div>
+                </div>
+                <div class="w-row row">
+                    <div class="w-col w-col-4">
+                        <h3 class="h3">Who are you and how can I talk to</h3>
+                    </div>
+                    <div class="w-col w-col-8">
+                        <p class="table-text">Email Mustafa: <span class="text-normal-weight"><a class="link" href="mailto:mustafa@devolio.net?subject=Devolio">mustafa@devolio.net</a></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
