@@ -1,4 +1,4 @@
-{% extends "website/base.html" %}
+{% extends "shared/base.html" %}
 {% block content %}
         <h2>Let's learn to code, together!⛵️</h2>
         <p>You found a place where a bunch of programmers from very level are helping eachother to become better programmers.</p>
@@ -20,7 +20,7 @@
             <h1>All questions:</h1>
             <ul>
                 {% for q in questions%}
-                <li><a href="/q/{{q.slug}}">{{q.title}}</a></li>
+                <li><a href="{% url 'q_detail' q.slug %}">{{q.title}}</a></li>
                 {% endfor %}
             </ul>
         </div>

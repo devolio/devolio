@@ -32,7 +32,8 @@ ALLOWED_HOSTS = ['next.devolio.net', 'devolioapp.herokuapp.com', '127.0.0.1', 'l
 DEVOLIO_APPS = [
     'website',
     'users',
-    'questions'
+    'questions',
+    'shared'
     ]
 
 THIRD_PARTY_APPS = [
@@ -150,9 +151,9 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')

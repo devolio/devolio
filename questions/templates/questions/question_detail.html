@@ -1,42 +1,41 @@
-{% extends "website/base.html"%}
+{% extends "shared/base.html"%}
+{% block head_title %}{{object.title}} by {{object.user}}
+in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
+{% endblock %}
 {% block content %}
-
 <div>
-  <h1 class="question-headline">{{object.title}}</h1>
-  <div class="question-body">
-    {{object.body_html | safe}}
-  </div>
-  <div class="question-meta">
-    <div class="q-meta">By <a href="#">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="/q/{{object.slug}}/edit">edit</a> {% endif %}
+    <h1 class="question-headline">{{object.title}}</h1>
+    <div class="question-body">
+        {{object.body_html | safe}}
     </div>
-  </div>
-  <div class="q-meta-tags">
-  <span>Tags</span>
-  {% for tag in object.tags.all %}
-  <a class="q-meta-tag" href="/tags/{{tag.slug}}">{{tag.name}}</a>
-  {% endfor %}
-  </div>
+    <div class="question-meta">
+        <div class="q-meta">By <a href="#">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="{% url 'q_edit' object.slug %}">edit</a> {% endif %}
+        </div>
+    </div>
+    <div class="q-meta-tags">
+        <span>Tags</span> 
+        {% for tag in object.tags.all %}
+        <a class="q-meta-tag" href="{% url 'tags_tag' tag.slug %}">{{tag.name}}</a> 
+        {% endfor %}
+    </div>
 </div>
 <div class="doobly-doo">
-  <h3>responses:</h3>
-  <div class="responses">
-  {% for r in responses %}
-  <div class="response">
-   
-    <p><strong>@{{r.user}}</strong><br>{{r.body_html|safe}}</p>
-  </div>
-  {% endfor %}
-  </div>
-
-  <div>
-  <form action="/q/response" method="POST">
-  {% csrf_token %}
-    <input type="hidden" name="qid" value="{{object.id}}">
-    <textarea name="body"></textarea>
-    <button>Send</button>
-  </form>
-
-  </div>
-
+    <h3>responses:</h3>
+    <div class="responses">
+        {% for r in responses %}
+        <div class="response">
+            <p><strong>@{{r.user}}</strong>
+                <br>{{r.body_html|safe}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <form action="{% url 'response' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="qid" value="{{object.id}}">
+            <textarea name="body"></textarea>
+            <button>Send</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

@@ -1,17 +1,18 @@
+{% load staticfiles %}
 <html>
     <head>
         <meta charset="utf-8">
         <title>{% block head_title %}Welcome to the new Devolio{% endblock %}</title>
         <script src="https://use.typekit.net/onc4rxd.js"></script>
         <script>try{Typekit.load({ async: true });}catch(e){}</script>
-        <link rel="stylesheet" href="/static/website/normalize.css">
-        <link rel="stylesheet" href="/static/website/style.css">
-        <link rel="stylesheet" href="/static/website/prism.css">
+        <link rel="stylesheet" href="{% static 'shared/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'shared/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'shared/css/prism.css' %}">
     </head>
     <body>
         <header>
             <a href="/" class="brand">
-                <img src="/static/website/logo_256.png" alt="Devolio Logo" class="logo">
+                <img src="{% static 'shared/img/logo_256.png' %}" alt="Devolio Logo" class="logo">
                 <h1 class="tk-europa">Devolio</h1>
             </a>
             <div class="nav">
@@ -26,7 +27,7 @@
 
         {% block content %}
         {% endblock %}
-        <script src="/static/website/prism.js"></script>
+        <script src="{% static 'shared/js/prism.js' %}"></script>
 
 
     </body>

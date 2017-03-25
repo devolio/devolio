@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from utils.slugger import unique_slugify
-
 from taggit.managers import TaggableManager
 import mistune
+
+from utils.slugger import unique_slugify
 
 
 class Question(models.Model):
@@ -31,8 +31,6 @@ class Question(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        # # TODO
-        # self.user = User.objects.get(pk=1)
         self.body_html = mistune.markdown(self.body_md)
         if not self.slug:
             unique_slugify(self, self.title)

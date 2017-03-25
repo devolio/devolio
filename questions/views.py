@@ -45,17 +45,23 @@ class QuestionDetailView(DetailView):
     template_name = "questions/question_detail.html"
 
 
-# class TagListView(ListView):
-#     model = Tag
-#     template_name = "questions/tag_list.html"
+class TagListView(ListView):
+    model = Tag
+    template_name = "questions/tag_list.html"
 
 
-# class TagQuestionsList(ListView):
-#     def get_queryset(self):
-#         slug = self.kwargs['slug']
-#         return Question.objects.filter(tags__name=slug).order_by('-created')
+class TagQuestionsList(ListView):
+    def get_queryset(self):
+        slug = self.kwargs['slug']
+        return Question.objects.filter(tags__name=slug).order_by('-created')
 
-#     template_name = "questions/tag_questions_list.html"
+    def get_context_data(self, **kwargs):
+        slug = self.kwargs['slug']
+        context = super(TagQuestionsList,self).get_context_data(**kwargs)
+        context['tag_name'] = Tag.objects.get(slug=slug).name
+        return context
+
+    template_name = "questions/tag_questions_list.html"
 
 
 @login_required
