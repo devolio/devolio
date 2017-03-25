@@ -1,11 +1,15 @@
 body {
-    max-width: 800px;
-    margin: 30px auto;
     font-family: "europa", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 20px;
     line-height: 1.6em;
     color: #333;
 }
+
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+}
+
 
 .btn {
     display: block;
@@ -36,11 +40,29 @@ a {
     font-weight: bold;
 }
 
-header, .brand {
+header {
+    background-color: #3b9dd8;
+    color: white;
+}
+
+.brand {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.nav-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: auto;
+
+}
+header a {
+    color: white;
 }
 
 header h1 {
@@ -50,56 +72,6 @@ header h1 {
 header .logo {
     width: 50px;
     height: 50px;
-
-}
-.project-cards {
-    display: flex;
-    flex-direction: column;
-/*    justify-content: space-between;*/
-
-}
-.project-card {
-    padding: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.hellocode-card {
-    background-color: #f7ea4f;
-}
-
-.devchat-card {
-    background-color: #5c4fc0;
-    color: #fff; 
-}
-
-.questions-card {
-    background-color: #3b9dd8;
-    color: #fff;
-}
-
-.discover-card {
-    background-color: #04cc66;
-    color: #fff;
-}
-
-div[class*="-card"] h2 {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    font-family: 'Europa', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-.card-link {
-    padding: 5px;
-}
-
-.project-card .card-link {
-    background-color: #f7ea4f;
-}
-
-.hellocode-card .card-link {
-    color: #fff;
-    background-color: #333;
 }
 
 form {

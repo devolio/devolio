@@ -1,6 +1,8 @@
 .section1 {
-  background-image: -webkit-linear-gradient(225deg, #3b9dd8, #2a4fd4);
-  background-image: linear-gradient(225deg, #3b9dd8, #2a4fd4);
+/*  background-image: -webkit-linear-gradient(225deg, #3b9dd8, #2a4fd4);
+  background-image: linear-gradient(225deg, #3b9dd8, #2a4fd4);*/
+  background-image: none;
+  background-color: #3b9dd8;
 }
 
 .logo {
