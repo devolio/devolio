@@ -16,5 +16,7 @@ First make sure docker is running and then do:
 - fix perms, partial
 - fix user when saving question, done
 - add id to question slug
+- fix question, tagged Qs page styling
+- 
 
 See issues.

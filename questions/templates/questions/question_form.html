@@ -1,5 +1,6 @@
 {% extends "shared/base.html" %}
-{% block head_title %}Share a a question!{% block content %}
+{% block head_title %}Share a a question!{% endblock %}
+{% block content %}
 <form class="question" id="question_form" method="post">
     {% csrf_token %}
     {{ form.as_p }}
