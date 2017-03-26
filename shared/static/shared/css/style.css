@@ -130,3 +130,58 @@ button, [type="submit"], .button {
     padding: 10px;
 }
 
+.doobly-doo textarea{
+    width: 100%;
+}
+
+.dc-btn {
+    background-color: #694ff7;
+    color: #fff;
+}
+.q-container {
+    width: 75%;
+}
+
+.q-item {
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    padding: 10px;
+
+}
+
+.q-item h2 {
+    font-size: 1.2em;
+}
+
+
+.q-tag {
+    background-color: rgba(96, 125, 139, 0.35);
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    border-radius: 1px;
+
+}
+
+.q-tags-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tags {
+    width: 20%;
+    background-color: #f9f9f9;
+    padding: 10px;
+}
+
+.user-index-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-index-header .button {
+    width: 150px;
+    height: 30px;
+}
+
+

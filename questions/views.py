@@ -4,10 +4,25 @@ from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Question, Response
 
 from taggit.models import Tag
+
+
+def paginate(qs, size, request):
+    """takes a QS, size `request` and returns paginated data"""
+    paginator = Paginator(qs, size)
+    page = request.GET.get('page')
+
+    try:
+        qs = paginator.page(page)
+    except PageNotAnInteger:
+        qs = paginator.page(1)
+    except EmptyPage:
+        qs = paginator.page(paginator.num_pages)
+    return qs
 
 
 class QuestionCreateView(LoginRequiredMixin, CreateView):
@@ -77,4 +92,12 @@ def create_response(request):
 
 
     return redirect(question)
+
+
+def questions_list(request):
+    return render(request, 'questions/questions_list.html',
+        {
+        'questions': paginate(Question.objects.all(), 20, request),
+        'tags': Tag.objects.all().order_by('name')
+        })
 

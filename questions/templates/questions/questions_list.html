@@ -1,0 +1,54 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+
+<div class="user-index">
+    <div class="user-index-header">
+    <h1>All Questions</h1>
+    <a class="button" href="{% url 'ask' %}">Ask a question!</a>
+    </div>
+    
+
+    <div class="q-tags-container">
+    <div class="q-container">
+    {% for q in questions %}
+        <div class="q-item">
+            <h2><a href="{% url 'q_detail' q.slug %}">{{q.title}}</a></h2>
+
+            <div class="q-meta">By <strong><a href="#fixme">@{{q.user}}</a></strong> in 
+                {% for tag in q.tags.all %}
+                <a href="#" class="q-tag">{{tag.name}}</a>
+                {% endfor %}
+                | <span>{{q.response_set.all|length}} responses</span>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="tags">
+    <h3>Tags</h3>
+    <ul>
+        {% for tag in tags%}
+        <li><a class="q-tag" href="{% url 'tags_tag' tag.slug %}">{{tag.name}}</a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    </div>
+      {% if questions.paginator and questions.paginator.num_pages > 1 %}
+      <div class="p-pagination">
+      {% if questions.has_previous %}
+      <a href="?page={{ questions.previous_page_number }}" class="p-pag-nr">‹</a>
+      {% endif %}
+
+      {% for pagenum in questions.paginator.page_range %}
+      {% if pagenum == questions.number %}
+      <a href="?page={{ pagenum }}" class="p-pag-nr p-pag-current">{{pagenum}}</a>
+      {% endif %}
+      {% endfor %}
+      
+      {% if questions.has_next %}
+      <a href="?page={{ questions.next_page_number }}" class="p-pag-nr">›</a>
+      {% endif %}
+      </div>
+      {% endif %}
+</div>
+{% endblock %}
