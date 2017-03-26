@@ -4,7 +4,11 @@
 
 <div class="user-index">
     <div class="user-index-header">
+    {% if tag_name %}
+    <h1>{{questions|length}} questions in {{tag_name}}</h1>
+    {% else %}
     <h1>All Questions</h1>
+    {% endif %}
     <a class="button" href="{% url 'ask' %}">Ask a question!</a>
     </div>
     
