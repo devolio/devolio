@@ -9,7 +9,7 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
         {{object.body_html | safe}}
     </div>
     <div class="question-meta">
-        <div class="q-meta">By <a href="#">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="{% url 'q_edit' object.slug %}">edit</a> {% endif %}
+        <div class="q-meta">By <a href="{% url 'public_user' object.user %}">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="{% url 'q_edit' object.slug %}">edit</a> {% endif %}
         </div>
     </div>
     <div class="q-meta-tags">
@@ -20,7 +20,8 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
     </div>
 </div>
 <div class="doobly-doo">
-    <h3>responses:</h3>
+    <h3>Responses:</h3>
+    <p>Offer your herlp. Be nice!</p>
     <div class="responses">
         {% for r in responses %}
         <div class="response">
@@ -29,13 +30,18 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
         </div>
         {% endfor %}
     </div>
+
     <div>
+    {% if user.is_authenticated %}
         <form action="{% url 'response' %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="qid" value="{{object.id}}">
             <textarea name="body"></textarea>
             <button>Send</button>
         </form>
+    {% else %}
+    <a class="button" href="{% url 'account_login' %}?next={% url 'q_detail' object.slug %}">Login to leave a response!</a>
+    {% endif %}
     </div>
 </div>
 {% endblock %}

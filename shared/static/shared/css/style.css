@@ -3,6 +3,8 @@ body {
     font-size: 20px;
     line-height: 1.6em;
     color: #333;
+    background-color: #f9f9f9;
+    -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -60,7 +62,7 @@ header {
     margin: auto;
 
 }
-.nav a {
+.nav {
     font-size: 0.8em;
     margin-left: 5px;
 }
@@ -85,16 +87,21 @@ form {
 }
 
 form > p {
-    margin: 7px;
+    margin: 0px;
     width: 100%;
 }
 
-[type="text"], [type="password"], [type="email"], textarea {
+ul {
+    padding-left: 0px;
+}
+
+[type="text"], [type="password"], [type="email"], [type="url"], textarea {
     display: block;
-    padding: 10px;
+    padding: 20px 10px;
     margin: 10px 0px;
     width: 50%;
     border: 1px solid #eee;
+    font-family: inherit;
 }
 
 [type="text"]:focus, [type="password"]:focus, [type="email"]:focus {
@@ -106,10 +113,11 @@ button, [type="submit"], .button {
     padding: 15px;
     background-color: #f7ea4f;
     color: #333;
+    cursor: pointer;
     text-align: center;
     width: 30%;
     border-width: 0px;
-    font-family: "Europa", sans-serif;
+    font-family: inherit;
     cursor: pointer;
 }
 
@@ -124,7 +132,7 @@ button, [type="submit"], .button {
 }
 
 .response {
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.03);
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
@@ -143,7 +151,7 @@ button, [type="submit"], .button {
 }
 
 .q-item {
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.03);
     margin-bottom: 20px;
     padding: 10px;
 
@@ -170,8 +178,12 @@ button, [type="submit"], .button {
 
 .tags {
     width: 20%;
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.03);
     padding: 10px;
+}
+
+.tags li {
+    list-style: none;
 }
 
 .user-index-header {

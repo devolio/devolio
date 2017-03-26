@@ -22,6 +22,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('allauth.urls')),
     url(r'^me', uv.me, name='me'),
+    url(r'^profile/create', uv.create_profile, name='create_profile'),
+    url(r'^@(?P<slug>[-\w]+)', uv.public_user, name='public_user'),
     url(r'^q/', include('questions.urls')),
     url(r'^$', wv.index, name='ws_index')
 ]

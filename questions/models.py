@@ -36,9 +36,6 @@ class Question(models.Model):
             unique_slugify(self, self.title)
         super(Question, self).save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        return '/q/{}'.format(self.slug)
-
 
 class Response(models.Model):
     user = models.ForeignKey(User)

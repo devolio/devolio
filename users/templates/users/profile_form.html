@@ -1,0 +1,10 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<form method="POST" action="{% url 'create_profile' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="button" type="submit" name="de" value="Send">
+</form>
+
+{% endblock %}

@@ -80,13 +80,13 @@ def create_response(request):
         r.body_md = request.POST.get('body')
         r.save()
 
-    return redirect(question)
+    return redirect('q_detail', question.slug)
 
 
 def questions_list(request):
     return render(request, 'questions/questions_list.html',
         {
-        'questions': paginate(Question.objects.all(), 20, request),
+        'questions': paginate(Question.objects.all().order_by('-created'), 20, request),
         'tags': Tag.objects.all().order_by('name')
         })
 
