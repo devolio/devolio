@@ -1,29 +1,16 @@
-"""devolio URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.10/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
 from django.conf.urls import url, include
 from django.contrib import admin
 from website import views as wv
 from users import views as uv
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('allauth.urls')),
-    url(r'^me', uv.me, name='me'),
-    url(r'^profile/create', uv.create_profile, name='create_profile'),
-    url(r'^@(?P<slug>[-\w]+)', uv.public_user, name='public_user'),
+    url(r'^dashboard', uv.dashboard, name='dashboard'),
+    url(r'^profile/create', uv.ProfileCreateView.as_view(), name='create_profile'),
+    url(r'^@(?P<slug>[-\w]+)/update', uv.ProfileUpdateView.as_view(), name='update_profile'),
+    url(r'^@(?P<slug>[-\w]+)', uv.public_profile, name='public_profile'),
     url(r'^q/', include('questions.urls')),
     url(r'^$', wv.index, name='ws_index')
 ]

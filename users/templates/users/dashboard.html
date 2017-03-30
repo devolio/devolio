@@ -8,6 +8,11 @@
     <p>
     	<a href="{% url 'ask'%}" class="button">Ask a question!</a>
 	<a href="https://devchat.devolio.net/" class="button dc-btn">Join DevChat!</a>
+    {% if request.user.profile %}
+    <a href="{% url 'update_profile' request.user.profile.slug %}" class="button">Update your profile</a>
+    {% else %}
+    <a href="{% url 'create_profile' %}" class="button">Create a public profile</a>
+    {% endif %}
     </p>
 
     <p>
@@ -19,7 +24,7 @@
             {% endfor %}
         </ul>
         {% else %}
-        You do not have any questions yet :/
+        You do not have any questions yet. Click on the button above to ask your first question.
         {% endif %}
         
     </p>

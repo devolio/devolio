@@ -9,7 +9,7 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
         {{object.body_html | safe}}
     </div>
     <div class="question-meta">
-        <div class="q-meta">By <a href="{% url 'public_user' object.user %}">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="{% url 'q_edit' object.slug %}">edit</a> {% endif %}
+        <div class="q-meta">By <a href="{% url 'public_profile' object.user.username %}">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="{% url 'q_edit' object.slug %}">edit</a> {% endif %}
         </div>
     </div>
     <div class="q-meta-tags">

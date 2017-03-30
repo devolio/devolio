@@ -18,7 +18,7 @@
         <div class="q-item">
             <h2><a href="{% url 'q_detail' q.slug %}">{{q.title}}</a></h2>
 
-            <div class="q-meta">By <strong><a href="{% url 'public_user' q.user %}">@{{q.user}}</a></strong> in 
+            <div class="q-meta">By <strong><a href="{% url 'public_profile' q.user.username %}">@{{q.user}}</a></strong> in 
                 {% for tag in q.tags.all %}
                 <a href="#" class="q-tag">{{tag.name}}</a>
                 {% endfor %}

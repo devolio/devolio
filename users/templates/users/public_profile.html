@@ -3,30 +3,31 @@
 {% block content %}
 <div class="public_user">
     {% if user.profile %}
-    <h1>{{user.profile.name}}</h1>
+    <h1>@{{user.profile.user}}</h1>
     <p>{{user.profile.summary}}</p>
-
+    {% if user.profile.good_skills.all %}
     <div>
         I know: {% for s in user.profile.good_skills.all %} <strong>{{s.name}}</strong> {% endfor %}
-    </div>
+    </div>{% endif %}
+    {% if user.profile.learning_skills.all %}
     <div>
         I'm still learning: {% for s in user.profile.learning_skills.all %} <strong>{{s.name}}</strong> {% endfor %}
-    </div>
+    </div>{% endif %}
     <div>
         <ul>
-            <li>DevChat: <a href="{{user.profile.slack_url}}">@{{user.profile.slack_handle}}</a></li>
-            <li><a href="{{user.profile.code_url}}">{{user.profile.code_clean}}</a></li>
-            <li><a href="{{user.profile.website}}">{{user.profile.website_clean}}</a></li>
+		{% if user.profile.slack_url %}<li>DevChat: <a href="{{user.profile.slack_url}}">@{{user.profile.slack_handle}}</a></li>{% endif %}
+		{% if user.profile.code_clean %}<li><a href="{{user.profile.code_url}}">{{user.profile.code_clean}}</a></li>{% endif %}
+		{% if user.profile.website %}<li><a href="{{user.profile.website}}">{{user.profile.website_clean}}</a></li>{% endif %}
         </ul>
     </div>
-
+    {% if questions %}
     <div>
     <h3>My questions</h3>
     {% for q in questions %}
         <div class="q-item">
             <h2><a href="{% url 'q_detail' q.slug %}">{{q.title}}</a></h2>
 
-            <div class="q-meta">By <strong><a href="{% url 'public_user' q.user %}">@{{q.user}}</a></strong> in 
+            <div class="q-meta">By <strong><a href="{% url 'public_profile' q.user.username %}">@{{q.user}}</a></strong> in 
                 {% for tag in q.tags.all %}
                 <a href="#" class="q-tag">{{tag.name}}</a>
                 {% endfor %}
@@ -35,6 +36,7 @@
         </div>
     {% endfor %}
     </div>
+    {% endif %}
       {% if questions.paginator and questions.paginator.num_pages > 1 %}
       <div class="p-pagination">
       {% if questions.has_previous %}
@@ -54,7 +56,7 @@
       {% endif %}
     {% else %}
     {% if user == request.user %}
-    <a href="{% url 'create_profile'%}" class="button">Create your profile now!</a>
+    <a href="{% url 'edit_profile'%}" class="button">Create your profile now!</a>
     {% else %}
     <p>{{user}} does  not have a profile yet :/</p>
     {% endif %}

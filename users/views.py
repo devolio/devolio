@@ -1,62 +1,68 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.views.generic import CreateView, UpdateView
+from django.views.generic.edit import ModelFormMixin
 from .models import *
 from questions.models import Question
 from questions.views import paginate
-from .forms import ProfileForm
 
 
 @login_required
-def me(request):
+def dashboard(request):
     """Renders the home page"""
     user = request.user
 
     context = dict()
     context['questions'] = Question.objects.filter(user=user)
     
-    return render(request, 'users/me.html', context)
+    return render(request, 'users/dashboard.html', context)
 
 
-def public_user(request, slug):
+def public_profile(request, slug):
     user = User.objects.get(username=slug)
     questions = paginate(
         Question.objects.filter(user__username=slug).order_by('-created'),
         5, request)
 
-    return render(request, 'users/public_user.html',
+    return render(request, 'users/public_profile.html',
         {
         'user': user,
         'questions': questions
         })
 
 
-@login_required
-def create_profile(request):
-    form = ProfileForm
+class ProfileCreateView(LoginRequiredMixin, CreateView):
+    model = Profile
+    fields = ('summary', 'good_skills', 'learning_skills',
+            'slack_handle', 'code_url', 'website')
+    template_name = "users/profile_form.html"
+    form = ModelFormMixin
 
-    if request.method == 'POST':
-        f = ProfileForm(request.POST)
-        if f.is_valid():
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ProfileCreateView, self).form_valid(form)
+    
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            slug = request.user.profile.slug
+            return redirect('update_profile', slug)
+        except:
+            pass
+        return super(ProfileCreateView, self).dispatch(request, *args, **kwargs)
 
-            first_name = request.POST.get('first_name')
-            last_name = request.POST.get('last_name')
-            summary = request.POST.get('summary')
-            good_skills = request.POST.get('good_skills')
-            learning_skills = request.POST.get('learning_skills')
-            slack_handle = request.POST.get('slack_handle')
-            code_url = request.POST.get('code_url')
-            website = request.POST.get('website')
 
-            p = Profile(
-                user=request.user,
-                summary=summary,
-                slack_handle=slack_handle,
-                code_url=code_url,
-                website=website)
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = Profile
+    fields = ('summary', 'good_skills', 'learning_skills',
+            'slack_handle', 'code_url', 'website')
+    template_name = "users/profile_form.html"
 
-            p.save()
-
-    return render(request, 'users/profile_form.html', {'form': form})
-
+    def get_object(self, *args, **kwargs):
+        obj = super(ProfileUpdateView, self).get_object(*args, **kwargs)
+        if obj.user != self.request.user:
+            raise PermissionDenied()
+        return obj
 
