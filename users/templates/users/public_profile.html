@@ -56,7 +56,7 @@
       {% endif %}
     {% else %}
     {% if user == request.user %}
-    <a href="{% url 'edit_profile'%}" class="button">Create your profile now!</a>
+    <a href="{% url 'create_profile' %}" class="button">Create your profile now!</a>
     {% else %}
     <p>{{user}} does  not have a profile yet :/</p>
     {% endif %}
