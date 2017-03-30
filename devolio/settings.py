@@ -31,6 +31,7 @@ if HEROKU_RT:
     DEBUG = False
 
 ALLOWED_HOSTS = [
+    'devolio.net',
     'beta.devolio.net',
     'next.devolio.net',
     'devolioapp.herokuapp.com',

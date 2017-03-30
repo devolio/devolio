@@ -20,7 +20,7 @@
 
             <div class="q-meta">By <strong><a href="{% url 'public_profile' q.user.username %}">@{{q.user}}</a></strong> in 
                 {% for tag in q.tags.all %}
-                <a href="#" class="q-tag">{{tag.name}}</a>
+                <a href="{% url 'tags_tag' tag.slug %}" class="q-tag">{{tag.name}}</a>
                 {% endfor %}
                 | <span>{{q.response_set.all|length}} responses</span>
             </div>
