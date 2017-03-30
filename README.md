@@ -1,6 +1,6 @@
-# Devolio
+# Devolio (WIP)
 
-For the millionth time I'm trying to reboot/refactor/restructure **Devolio**...
+The project is very new and code quality is not the best.
 
 ## Run on Docker
 First make sure docker is running and then do:
@@ -11,12 +11,5 @@ First make sure docker is running and then do:
 
 **Currently it just shows a boring welcome page. More to come soon.**
 
-## Todos
-
-- fix perms, partial
-- fix user when saving question, done
-- add id to question slug
-- fix question, tagged Qs page styling
-- 
-
+## Todos  
 See issues.

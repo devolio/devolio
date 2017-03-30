@@ -23,7 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY', '97C%k7bxb8f3@UKV7BTHqdXWrkSRk^CMYyxSX@WNept')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJ_DEBUG', True)
+DEBUG = True
+
+HEROKU_RT = os.environ.get('HEROKU_RT')
+
+if HEROKU_RT:
+    DEBUG = False
 
 ALLOWED_HOSTS = [
     'beta.devolio.net',
@@ -183,4 +188,7 @@ ACCOUNT_USERNAME_MIN_LENGTH = 3
 # auth
 LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
-LOGIN_REDIRECT_URL = '/me'
+LOGIN_REDIRECT_URL = '/dashboard'
+
+BASE_URL = "https://beta.devolio.net"
+SLACK_TOKEN = os.environ.get('SLACK_TOKEN')

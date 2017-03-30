@@ -1,11 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from taggit.managers import TaggableManager
 import mistune
 
+from slackclient import SlackClient
+
 from utils.slugger import unique_slugify
 
+from devolio.settings import SLACK_TOKEN, BASE_URL
 
 class Question(models.Model):
     user = models.ForeignKey(User)
@@ -29,6 +36,9 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('q_detail', args=(self.slug,))
 
     def save(self, *args, **kwargs):
         self.body_html = mistune.markdown(self.body_md)
@@ -59,3 +69,24 @@ class Response(models.Model):
 
     def __unicode__(self):
         return self.user
+
+def slack_msg(instance):
+    return {
+        "title": instance.title,
+        "author_name": "@{}".format(instance.user.username),
+        "author_link": "{}/@{}".format(BASE_URL, instance.user.username),
+        "color": "#f78250",
+        "title_link": "{}{}".format(BASE_URL, instance.get_absolute_url()),
+        "pretext": "New question!",
+        "footer": "devolio.net",
+        }
+
+@receiver(post_save, sender=Question)
+def post2slack(sender, instance, **kwargs):
+    if SLACK_TOKEN:
+        sc = SlackClient(SLACK_TOKEN)
+        sc.api_call(
+        "chat.postMessage",
+        channel="#devolio_questions",
+        attachments=[slack_msg(instance)]
+        )
