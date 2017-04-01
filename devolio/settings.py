@@ -50,7 +50,8 @@ DEVOLIO_APPS = [
 THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
-    'taggit'
+    'taggit',
+    'channels'
 ]
 
 INSTALLED_APPS = [
@@ -60,7 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
-    # This is fot WhiteNoise but it should 
+    # This is for WhiteNoise but it should 
     # come brfore 'django.contrib.staticfiles'
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
@@ -193,3 +194,13 @@ LOGIN_REDIRECT_URL = '/dashboard'
 
 BASE_URL = "https://beta.devolio.net"
 SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get("REDIS_URL")],
+        },
+        "ROUTING": "devolio.routing.channel_routing",
+    },
+}

@@ -7,6 +7,7 @@ from questions import views as qv
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'realtime', wv.realtime),
     url(r'^users/', include('allauth.urls')),
     url(r'^dashboard', uv.dashboard, name='dashboard'),
     url(r'^profile/create', uv.ProfileCreateView.as_view(), name='create_profile'),

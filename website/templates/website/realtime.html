@@ -1,0 +1,13 @@
+<html>
+	<header>
+		<title>Realtime</title>
+	</header>
+	<body>
+		<h1>Channels</h1>
+<script>
+var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+var chat_socket = new WebSocket(
+		ws_scheme + '://' + window.location.host + "/realtime" + window.location.pathname);
+</script>
+	</body>
+</html>

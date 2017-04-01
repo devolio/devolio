@@ -9,3 +9,6 @@ def index(request):
         return redirect('questions')
 
     return SimpleTemplateResponse('website/index.html')
+
+def realtime(request):
+    return render(request, 'website/realtime.html')
