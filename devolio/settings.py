@@ -50,6 +50,8 @@ DEVOLIO_APPS = [
 THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.slack',
     'taggit'
 ]
 
@@ -193,3 +195,4 @@ LOGIN_REDIRECT_URL = '/dashboard'
 
 BASE_URL = "https://beta.devolio.net"
 SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
+

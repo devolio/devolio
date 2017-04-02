@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.dispatch import receiver
+
+from allauth.socialaccount.signals import social_account_added, social_account_removed
 
 from taggit.managers import TaggableManager
 
@@ -60,3 +63,19 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+@receiver(social_account_added)
+def add_slack_handle(request, sociallogin, **kwargs):
+    slack_handle = sociallogin.account.extra_data.get('name')
+    if slack_handle:
+        u = Profile.objects.get(user=sociallogin.user)
+        u.slack_handle = slack_handle
+        u.save()
+
+
+@receiver(social_account_removed)
+def remove_slack_handle(request, socialaccount, **kwargs):
+    u = Profile.objects.get(user=socialaccount.user)
+    u.slack_handle = ''
+    u.save()
