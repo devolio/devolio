@@ -7,6 +7,7 @@
     </a>
     <div class="nav">
         {% if user.is_authenticated %}
+        <a href="https://devolio-devchat.slack.com" target="_blank">DevChat</a> /
         <a href="{% url 'dashboard' %}">Dashboard</a> /
         <a href="{% url 'public_profile' user.username %}">Profile</a> /
         <a href="{% url 'account_logout' %}">Logout</a>

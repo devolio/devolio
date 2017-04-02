@@ -1,13 +1,17 @@
 {% extends "shared/base.html" %}
-
+{% load socialaccount %}
 {% block content %}
-
+{% get_social_accounts user as accounts %}
 <div>
 
     <p>Hi {{user}}</p>
     <p>
     	<a href="{% url 'ask'%}" class="button">Ask a question!</a>
-	<a href="https://devchat.devolio.net/" class="button dc-btn">Join DevChat!</a>
+	{% if not accounts.slack %}
+	<a href="{% provider_login_url "slack" process="connect" %}" class="button dc-btn">Connect with DevChat!</a>
+	{% else %}
+	<a href="{% url 'socialaccount_connections' %}" class="button dc-btn">Disconnect with DevChat!</a>
+	{% endif %}
     {% if request.user.profile %}
     <a href="{% url 'update_profile' request.user.profile.slug %}" class="button">Update your profile</a>
     {% else %}
