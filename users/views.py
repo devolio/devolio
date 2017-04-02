@@ -37,7 +37,7 @@ def public_profile(request, slug):
 class ProfileCreateView(LoginRequiredMixin, CreateView):
     model = Profile
     fields = ('summary', 'good_skills', 'learning_skills',
-            'slack_handle', 'code_url', 'website')
+              'code_url', 'website')
     template_name = "users/profile_form.html"
     form = ModelFormMixin
 
@@ -57,7 +57,7 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = Profile
     fields = ('summary', 'good_skills', 'learning_skills',
-            'slack_handle', 'code_url', 'website')
+              'code_url', 'website')
     template_name = "users/profile_form.html"
 
     def get_object(self, *args, **kwargs):
