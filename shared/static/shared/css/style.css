@@ -196,4 +196,18 @@ button, [type="submit"], .button {
     height: 30px;
 }
 
+@keyframes blink {
+  0% { color: #d0f7d0; }
+  100% { color: #19ca19; }
+}
+@-webkit-keyframes blink {
+  0% { color: #d0f7d0; }
+  100% { color: #19ca19; }
+}
+
+.green-dot {
+    -webkit-animation: blink 1.5s linear infinite;
+    -moz-animation: blink 1.5s linear infinite;
+    animation: blink 1.5s linear infinite;
+}
 

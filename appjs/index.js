@@ -110,7 +110,8 @@ class App extends Component {
         const reps = this.state.responses;
         return (
             <div className="responses">
-                <h3>Responses:</h3>
+                <h3>Responses <span className="green-dot"
+                                    title="Updates in real-time">⬤</span></h3>
                 <p>Offer your help. Be nice!</p>
                 {this.renderResponses(reps)}
                 <ResponseForm/>
