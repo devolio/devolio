@@ -19,14 +19,13 @@ from firebase import FIREBASE_JS_CONFIG
 
 
 def send_to_firebase(reply):
-    thread = "question-replies/{}".format(reply.question.id)
+    thread = "question-responses/{}".format(reply.question.id)
     firebase.database().child(thread).push({
                 "body": reply.body_html,
                 "user": reply.user.username,
                 "user_id": reply.user.id,
                 "reply_db_id": reply.id
         })
-
 
 
 def paginate(qs, size, request):
@@ -88,12 +87,13 @@ def tag_questions_list(request, slug):
         })
 
 
-
 @login_required
 def new_reply(request):
 
     data = json.loads(request.body)
-    print(data)
+    print('this', len(data.get('body')))
+    if not data.get('qid') or not data.get('body'):
+        return HttpResponse('Some/all data is missing. Or server error.', status=400)
 
     r = Response()
     r.user = request.user
@@ -105,7 +105,8 @@ def new_reply(request):
     # push to firebase
     send_to_firebase(r)
 
-    return HttpResponse('ok')
+    return HttpResponse('Response successful.')
+
 
 def questions_list(request):
     return render(request, 'questions/questions_list.html',

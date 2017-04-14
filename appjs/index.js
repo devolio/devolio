@@ -10,8 +10,8 @@ const dvdata = window.DEVOLIO_DATA;
 firebase.initializeApp(dvdata.firebaseConfig);
 
 const CSRFToken = document.cookie.replace(/(?:(?:^|.*;\s*)csrftoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-const sendReply = (data) => {
-    return fetch('/q/new_reply', {
+const sendResponse = (data) => {
+    return fetch('/q/new_response', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: new Headers({'X-CSRFToken': CSRFToken}),
@@ -20,20 +20,36 @@ const sendReply = (data) => {
 }
 
 
-class ReplyForm extends Component {
+class ResponseForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {body: '', qid: dvdata.QID};
+        this.state = {body: '', qid: dvdata.QID, statusMsg: ''};
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.showRespMsg = this.showRespMsg.bind(this);
     }
+
+    showRespMsg(msg) {
+        this.setState({statusMsg: msg})
+        setTimeout((msg) => {
+            this.setState({statusMsg: ''})
+        }, 5000);
+    }
+
 
     handleSubmit(event) {
         event.preventDefault();
+        if (this.state.body.replace(/\s/g,'').length == 0) {
+            return this.showRespMsg("Please provide a response.")
+        }
 
-        sendReply({body: this.state.body, qid: this.state.qid})
-        this.setState({body: ''})
-
+        sendResponse({
+                body: this.state.body,
+                qid: this.state.qid
+            }).then(resp => {
+                resp.text().then(text => this.showRespMsg(text))
+                if (resp.ok) this.setState({body: ''});
+            })
     }
 
     handleChange(event) {
@@ -49,34 +65,36 @@ class ReplyForm extends Component {
                     onChange={this.handleChange}
                 ></textarea>
                 <input type='submit' className="button" value="Submit" />
+                <small>{this.state.statusMsg}</small>
                 </form>
+
                 );
         } else {
-            return (<a class="button" href="#">Login to leave a response!</a>);
+            return (<a class="button" href="/users/login/">Login to leave a response!</a>);
         }
     }
 }
 
 class App extends Component {
-    state =  {replies: []};
+    state =  {responses: []};
 
-    loadReplies() {
+    loadResponses() {
 
-        const replies = firebase.database().ref('question-replies/' + dvdata.QID);
-        replies.on('value', items => this.setState({replies: items.val()}) );
+        const responses = firebase.database().ref('question-responses/' + dvdata.QID);
+        responses.on('value', items => this.setState({responses: items.val()}) );
     }
 
     componentDidMount() {
-        this.loadReplies();
+        this.loadResponses();
     }
 
-    renderReplies(reps) {
+    renderResponses(reps) {
         if (!reps) return;
 
         return Object.keys(reps).map(key => {
             return (
                 <div className="response">
-                <strong>{reps[key].user}</strong><br />
+                <strong><a href={"/@"+reps[key].user} >{"@"+reps[key].user}</a></strong><br />
                 <div dangerouslySetInnerHTML={{__html: reps[key].body}}></div>
                 </div>
             );
@@ -84,18 +102,17 @@ class App extends Component {
     }
 
 
-
     render() {
-        const reps = this.state.replies;
+        const reps = this.state.responses;
         return (
             <div className="responses">
                 <h3>Responses:</h3>
                 <p>Offer your help. Be nice!</p>
-                {this.renderReplies(reps)}
-                <ReplyForm/>
+                {this.renderResponses(reps)}
+                <ResponseForm/>
             </div>
         );
     }
 }
 
-render(<App/>, document.getElementById('replies'));
+render(<App/>, document.getElementById('responses-wrapper'));

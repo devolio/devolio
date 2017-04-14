@@ -28,6 +28,6 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
     </div>
 </div>
 <input type="hidden" name="csrf" value="{{csrf_token}}">
-<div id="replies" class="replies" >
+<div id="responses-wrapper" class="responses-wrapper" >
 </div>
 {% endblock %}
