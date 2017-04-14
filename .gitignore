@@ -107,4 +107,3 @@ node_modules/
 .idea/
 
 *-firebase-adminsdk-*.json
-fb_config.py

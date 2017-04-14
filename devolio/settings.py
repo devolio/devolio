@@ -198,16 +198,5 @@ SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
 
 
 ### Firebase ###
-import fb_config
+from firebase import firebase
 
-FIREBASE_JS_CONFIG = fb_config.FIREBASE_JS_CONFIG_DEV
-FIREBASE_CONFIG = fb_config.FIREBASE_CONFIG_DEV
-
-if HEROKU_RT:
-    # if production env
-    FIREBASE_JS_CONFIG = fb_config.FIREBASE_JS_CONFIG_PROD
-    FIREBASE_CONFIG = FIREBASE_CONFIG_PROD
-
-
-import pyrebase as pb
-firebase = pb.initialize_app(FIREBASE_CONFIG)
