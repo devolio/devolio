@@ -11,7 +11,7 @@ firebase.initializeApp(dvdata.firebaseConfig);
 
 const CSRFToken = document.cookie.replace(/(?:(?:^|.*;\s*)csrftoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 const sendResponse = (data) => {
-    return fetch('/q/new_response', {
+    return fetch('/new_response', {
                 method: 'POST',
                 credentials: 'same-origin',
                 headers: new Headers({'X-CSRFToken': CSRFToken}),
@@ -70,7 +70,11 @@ class ResponseForm extends Component {
 
                 );
         } else {
-            return (<a class="button" href="/users/login/">Login to leave a response!</a>);
+            return (<a
+                        class="button"
+                        href={"/users/login/?next="+window.location.pathname}>
+                        Login to leave a response!
+                    </a>);
         }
     }
 }

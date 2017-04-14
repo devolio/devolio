@@ -1,7 +1,7 @@
 {
   "name": "Devolio",
   "version": "1.0.0",
-  "main": "./src/index.js",
+  "main": "./appjs/index.js",
   "repository": "git@github.com:devolio/devolio.git",
   "author": "Mustafa Abdelhai <hi@mustafa.li>",
   "license": "GPL-3.0",

@@ -16,5 +16,8 @@ urlpatterns = [
     url(r'^@(?P<slug>[-\w]+)', uv.public_profile, name='public_profile'),
     url(r'^t/(?P<slug>[-\w]+)$', qv.tag_questions_list, name="tags_tag"),
     url(r'^q/', include('questions.urls')),
+    url(r'^ask$', qv.QuestionCreateView.as_view(), name="ask"),
+    url(r'^questions$', qv.questions_list, name="questions"),
+    url(r'^new_response$', qv.new_reply, name="new_reply"),
     url(r'^$', wv.index, name='ws_index')
 ]

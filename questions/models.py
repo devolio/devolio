@@ -67,8 +67,9 @@ class Response(models.Model):
         self.body_html = mistune.markdown(self.body_md)
         super(Response, self).save(*args, **kwargs)
 
-    def __unicode__(self):
-        return self.user
+    def __str__(self):
+        return "Response to {}".format(self.question)
+
 
 def slack_msg(instance):
     return {
@@ -80,6 +81,7 @@ def slack_msg(instance):
         "pretext": "New question!",
         "footer": "devolio.net",
         }
+
 
 @receiver(post_save, sender=Question)
 def post2slack(sender, instance, **kwargs):
