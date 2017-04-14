@@ -14,14 +14,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
 
-# Firebase
-import pyrebase as pb
-from devolio import settings
+from devolio.settings import firebase
+from firebase import FIREBASE_JS_CONFIG
 
 
 def send_to_firebase(reply):
     thread = "question-replies/{}".format(reply.question.id)
-    settings.firebase.database().child(thread).push({
+    firebase.database().child(thread).push({
                 "body": reply.body_html,
                 "user": reply.user.username,
                 "user_id": reply.user.id,
@@ -74,7 +73,7 @@ class QuestionDetailView(DetailView):
         context = super(QuestionDetailView, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         context['responses'] = Response.objects.filter(question__slug=slug)
-        context['firebase_config'] = json.dumps(settings.FIREBASE_JS_CONFIG)
+        context['firebase_config'] = json.dumps(FIREBASE_JS_CONFIG)
         return context
 
     template_name = "questions/question_detail.html"

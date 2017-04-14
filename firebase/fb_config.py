@@ -8,7 +8,7 @@ FIREBASE_CONFIG_DEV = {
     "messagingSenderId": "156446289911"
 }
 
-FIRE_BASE_CONFIG_PROD = {
+FIREBASE_CONFIG_PROD = {
     "apiKey": 'AIzaSyAC2xhJpx4VQ4w8hXDhhInalFLUyp5QAmA',
     "authDomain": "devolio-responses.firebaseapp.com",
     "databaseURL": "https://devolio-responses.firebaseio.com",
