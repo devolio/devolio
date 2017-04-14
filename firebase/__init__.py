@@ -10,7 +10,7 @@ FIREBASE_CONFIG = fb_config.FIREBASE_CONFIG_DEV
 if os.environ.get('HEROKU_RT'):
     # if production env
     FIREBASE_JS_CONFIG = fb_config.FIREBASE_JS_CONFIG_PROD
-    FIREBASE_CONFIG = FIREBASE_CONFIG_PROD
+    FIREBASE_CONFIG = fb_config.FIREBASE_CONFIG_PROD
 
 
 class CustomFirebase(Firebase):
@@ -20,11 +20,15 @@ class CustomFirebase(Firebase):
     "https://www.googleapis.com/auth/cloud-platform"
     ]
 
+    fb_key = os.environ.get('FIREBASE_PRIVATE_KEY') or ''
+    signer = Signer.from_string(fb_key.replace('\\n', '\n'))
+
     creds = {
     'scopes': scopes,
+    'signer': signer,
     'service_account_email': os.environ.get('FIREBASE_CLIENT_EMAIL'),
-    'private_key_id': os.environ.get('FIREBASE_PRIVATE_KEY_ID'),
-    'signer': Signer.from_string(os.environ.get('FIREBASE_PRIVATE_KEY').replace('\\n', '\n'))
+    'private_key_id': os.environ.get('FIREBASE_PRIVATE_KEY_ID')
+
     }
 
     def __init__(self, config):
