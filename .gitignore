@@ -102,5 +102,9 @@ ENV/
 media/
 staticfiles/
 
+node_modules/
 .vscode/
 .idea/
+
+*-firebase-adminsdk-*.json
+fb_config.py

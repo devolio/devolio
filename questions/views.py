@@ -10,6 +10,25 @@ from .models import Question, Response
 
 from taggit.models import Tag
 
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import json
+
+# Firebase
+import pyrebase as pb
+from devolio import settings
+
+
+def send_to_firebase(reply):
+    thread = "question-replies/{}".format(reply.question.id)
+    settings.firebase.database().child(thread).push({
+                "body": reply.body_html,
+                "user": reply.user.username,
+                "user_id": reply.user.id,
+                "reply_db_id": reply.id
+        })
+
+
 
 def paginate(qs, size, request):
     """takes a QS, size `request` and returns paginated data"""
@@ -55,6 +74,7 @@ class QuestionDetailView(DetailView):
         context = super(QuestionDetailView, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         context['responses'] = Response.objects.filter(question__slug=slug)
+        context['firebase_config'] = json.dumps(settings.FIREBASE_JS_CONFIG)
         return context
 
     template_name = "questions/question_detail.html"
@@ -65,23 +85,28 @@ def tag_questions_list(request, slug):
         {
         'questions': Question.objects.filter(tags__name=slug).order_by('-created'),
         'tag_name': Tag.objects.get(slug=slug).name,
-        'tags': Tag.objects.all().order_by('name')
+        'tags': Tag.objects.all().order_by('name'),
         })
 
 
+
 @login_required
-def create_response(request):
-    question = None
-    if request.POST:
-        r = Response()
-        r.user = request.user
-        question = Question.objects.get(id=request.POST.get('qid'))
-        r.question = question
-        r.body_md = request.POST.get('body')
-        r.save()
+def new_reply(request):
 
-    return redirect('q_detail', question.slug)
+    data = json.loads(request.body)
+    print(data)
 
+    r = Response()
+    r.user = request.user
+    question = Question.objects.get(id=data.get('qid'))
+    r.question = question
+    r.body_md = data.get('body')
+    r.save()
+
+    # push to firebase
+    send_to_firebase(r)
+
+    return HttpResponse('ok')
 
 def questions_list(request):
     return render(request, 'questions/questions_list.html',

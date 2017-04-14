@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
-    # This is fot WhiteNoise but it should 
+    # This is fot WhiteNoise but it should
     # come brfore 'django.contrib.staticfiles'
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
@@ -193,6 +193,21 @@ LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
 LOGIN_REDIRECT_URL = '/dashboard'
 
-BASE_URL = "https://beta.devolio.net"
+BASE_URL = 'https://beta.devolio.net'
 SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
 
+
+### Firebase ###
+import fb_config
+
+FIREBASE_JS_CONFIG = fb_config.FIREBASE_JS_CONFIG_DEV
+FIREBASE_CONFIG = fb_config.FIREBASE_CONFIG_DEV
+
+if HEROKU_RT:
+    # if production env
+    FIREBASE_JS_CONFIG = fb_config.FIREBASE_JS_CONFIG_PROD
+    FIREBASE_CONFIG = FIREBASE_CONFIG_PROD
+
+
+import pyrebase as pb
+firebase = pb.initialize_app(FIREBASE_CONFIG)

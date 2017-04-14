@@ -1,0 +1,22 @@
+{
+  "name": "Devolio",
+  "version": "1.0.0",
+  "main": "./src/index.js",
+  "repository": "git@github.com:devolio/devolio.git",
+  "author": "Mustafa Abdelhai <hi@mustafa.li>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "babel-preset-stage-0": "^6.24.1",
+    "firebase": "^3.7.5",
+    "preact": "^7.2.1",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "uglify-js": "^2.8.22",
+    "webpack": "^2.3.3"
+  }
+}

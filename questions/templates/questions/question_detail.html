@@ -3,6 +3,14 @@
 in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
 {% endblock %}
 {% block content %}
+
+<script type="text/javascript">
+    window.DEVOLIO_DATA ={
+        QID: {{object.id}},
+        loggedIn: {% if user.is_authenticated %}true{% else %}false{% endif %},
+        firebaseConfig: {{firebase_config|safe}}
+    }
+</script>
 <div>
     <h1 class="question-headline">{{object.title}}</h1>
     <div class="question-body">
@@ -13,35 +21,13 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
         </div>
     </div>
     <div class="q-meta-tags">
-        <span>Tags</span> 
+        <span>Tags</span>
         {% for tag in object.tags.all %}
-        <a class="q-tag q-meta-tag" href="{% url 'tags_tag' tag.slug %}">{{tag.name}}</a> 
+        <a class="q-tag q-meta-tag" href="{% url 'tags_tag' tag.slug %}">{{tag.name}}</a>
         {% endfor %}
     </div>
 </div>
-<div class="doobly-doo">
-    <h3>Responses:</h3>
-    <p>Offer your help. Be nice!</p>
-    <div class="responses">
-        {% for r in responses %}
-        <div class="response">
-            <p><strong>@{{r.user}}</strong>
-                <br>{{r.body_html|safe}}</p>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div>
-    {% if user.is_authenticated %}
-        <form action="{% url 'response' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="qid" value="{{object.id}}">
-            <textarea name="body"></textarea>
-            <button>Send</button>
-        </form>
-    {% else %}
-    <a class="button" href="{% url 'account_login' %}?next={% url 'q_detail' object.slug %}">Login to leave a response!</a>
-    {% endif %}
-    </div>
+<input type="hidden" name="csrf" value="{{csrf_token}}">
+<div id="replies" class="replies" >
 </div>
 {% endblock %}
