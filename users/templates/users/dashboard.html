@@ -6,12 +6,12 @@
 
     <p>Hi {{user}}</p>
     <p>
-    	<a href="{% url 'ask'%}" class="button">Ask a question!</a>
-	{% if not accounts.slack %}
-	<a href="{% provider_login_url "slack" process="connect" %}" class="button dc-btn">Connect with DevChat!</a>
-	{% else %}
-	<a href="{% url 'socialaccount_connections' %}" class="button dc-btn">Disconnect with DevChat!</a>
-	{% endif %}
+        <a href="{% url 'ask'%}" class="button">Ask a question!</a>
+    {% if not accounts.slack %}
+    <a href="{% provider_login_url "slack" process="connect" %}" class="button dc-btn">Link to DevChat!</a>
+    {% else %}
+    <a href="{% url 'socialaccount_connections' %}" class="button dc-btn">Unlink DevChat!</a>
+    {% endif %}
     {% if request.user.profile %}
     <a href="{% url 'update_profile' request.user.profile.slug %}" class="button">Update your profile</a>
     {% else %}
@@ -24,13 +24,13 @@
         {% if questions%}
         <ul>
             {%  for question in questions %}
-	    <li><a href="/q/{{question.slug}}">{{ question.title|title }}</a></li>
+        <li><a href="/q/{{question.slug}}">{{ question.title|title }}</a></li>
             {% endfor %}
         </ul>
         {% else %}
         You do not have any questions yet. Click on the button above to ask your first question.
         {% endif %}
-        
+
     </p>
 
 </div>

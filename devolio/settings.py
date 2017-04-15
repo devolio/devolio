@@ -36,7 +36,9 @@ ALLOWED_HOSTS = [
     'next.devolio.net',
     'devolioapp.herokuapp.com',
     '127.0.0.1',
-    'localhost']
+    'localhost',
+    '43edb797.ngrok.io'
+    ]
 
 
 # Application definition
@@ -199,4 +201,6 @@ SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
 
 ### Firebase ###
 from firebase import firebase
+
+SLACK_SLACK2DEVOLIO_TOKEN = os.environ.get('SLACK_SLACK2DEVOLIO_TOKEN')
 
