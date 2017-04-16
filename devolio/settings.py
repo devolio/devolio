@@ -212,7 +212,6 @@ RAVEN_DSN = os.environ.get('RAVEN_DSN')
 if RAVEN_DSN:
     RAVEN_CONFIG = {
         'dsn': RAVEN_DSN,
-        'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
     }
 
 ### Email/Sendgrid ###
