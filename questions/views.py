@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, UpdateView, ListView
 from django.views.generic.edit import ModelFormMixin
@@ -6,23 +8,25 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
-from users.models import Profile
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
+from users.models import Profile
 from .models import Question, Response
 
 from taggit.models import Tag
-
-from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-import json
-
-from devolio.settings import firebase, SLACK_SLACK2DEVOLIO_TOKEN
-from firebase import FIREBASE_JS_CONFIG
-
 from slackclient import SlackClient
-from devolio.settings import SLACK_TOKEN, BASE_URL
-
 from annoying.functions import get_object_or_this
+
+from firebase import FIREBASE_JS_CONFIG
+from devolio.settings import (
+    firebase,
+    SLACK_SLACK2DEVOLIO_TOKEN,
+    SLACK_TOKEN,
+    BASE_URL
+    )
+
+
 
 def send_to_firebase(reply):
     thread = "question-responses/{}".format(reply.question.id)
@@ -97,7 +101,7 @@ def tag_questions_list(request, slug):
 def new_response(request):
 
     data = json.loads(request.body)
-    print('this', len(data.get('body')))
+
     if not data.get('qid') or not data.get('body'):
         return HttpResponse('Some/all data is missing. Or server error.', status=400)
 

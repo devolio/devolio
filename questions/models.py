@@ -5,14 +5,17 @@ from django.core.urlresolvers import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from django.core.mail import send_mail
+
 from taggit.managers import TaggableManager
 import mistune
-
 from slackclient import SlackClient
 
 from utils.slugger import unique_slugify
-
 from devolio.settings import SLACK_TOKEN, BASE_URL
+
+
+
 
 class Question(models.Model):
     user = models.ForeignKey(User)
@@ -71,13 +74,17 @@ class Response(models.Model):
         return "Response to {}".format(self.question)
 
 
+def full_url(path):
+    return "{}{}".format(BASE_URL, path)
+
+
 def slack_msg(instance):
     return {
         "title": instance.title,
         "author_name": "@{}".format(instance.user.username),
         "author_link": "{}/@{}".format(BASE_URL, instance.user.username),
         "color": "#f78250",
-        "title_link": "{}{}".format(BASE_URL, instance.get_absolute_url()),
+        "title_link": full_url(instance.get_absolute_url()),
         "pretext": "New question!",
         "footer": "devolio.net",
         }
@@ -85,6 +92,9 @@ def slack_msg(instance):
 
 @receiver(post_save, sender=Question)
 def post2slack(sender, instance, **kwargs):
+    """
+    Sends every new question to the #devolio_questions channel on Slack.
+    """
     if SLACK_TOKEN:
         sc = SlackClient(SLACK_TOKEN)
         sc.api_call(
@@ -92,3 +102,36 @@ def post2slack(sender, instance, **kwargs):
         channel="#devolio_questions",
         attachments=[slack_msg(instance)]
         )
+
+
+REPLY_EMAIL = """
+Hi {},\n
+{} just left an answer on your question: {}\n
+View it here: {}
+\n
+Have a nice day!
+"""
+
+@receiver(post_save, sender=Response)
+def new_response_email(sender, instance, **kwargs):
+    """
+    Sends an email of new responses to the question author.
+    """
+    email = instance.question.user.email
+    ques = instance.question
+
+    # if the question author has an email and the question has less than
+    # 3 responses then send them and email.
+    if email and len(ques.response_set.all()) < 3:
+        return send_mail(
+            subject='New response for {}'.format(ques.title),
+            message=REPLY_EMAIL.format(
+                ques.user,
+                instance.user,
+                ques.title,
+                full_url(ques.get_absolute_url())
+                ),
+            from_email='hello@devolio.net',
+            recipient_list=[email],
+            fail_silently=True,
+            )
