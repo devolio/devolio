@@ -211,3 +211,13 @@ button, [type="submit"], .button {
     animation: blink 1.5s linear infinite;
 }
 
+.question-headline {
+    font-size: 1.6em;
+    line-height: 1.2em;
+}
+
+.responses-wrapper a, .question-wrapper a {
+    padding-bottom: 0px;
+    border-bottom: 2px solid #ccc;
+
+}

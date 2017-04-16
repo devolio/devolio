@@ -11,7 +11,7 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
         firebaseConfig: {{firebase_config|safe}}
     }
 </script>
-<div>
+<div class="question-wrapper">
     <h1 class="question-headline">{{object.title}}</h1>
     <div class="question-body">
         {{object.body_html | safe}}
@@ -20,12 +20,14 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
         <div class="q-meta">By <a href="{% url 'public_profile' object.user.username %}">@{{object.user}}</a> on {{object.created|date:"D d M Y"}} | {% if object.user == request.user %}<a href="{% url 'q_edit' object.slug %}">edit</a> {% endif %}
         </div>
     </div>
+    {% if object.tags.all %}
     <div class="q-meta-tags">
         <span>Tags</span>
         {% for tag in object.tags.all %}
         <a class="q-tag q-meta-tag" href="{% url 'tags_tag' tag.slug %}">{{tag.name}}</a>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 <input type="hidden" name="csrf" value="{{csrf_token}}">
 <div id="responses-wrapper" class="responses-wrapper" >

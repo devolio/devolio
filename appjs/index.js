@@ -113,6 +113,12 @@ class App extends Component {
                 <h3>Responses <span className="green-dot"
                                     title="Updates in real-time">⬤</span></h3>
                 <p>Offer your help. Be nice!</p>
+                <p>
+                <small>You can use <a
+                href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+                target="_blank">Markdown</a>. The thread updates in real-time.
+                </small>
+                </p>
                 {this.renderResponses(reps)}
                 <ResponseForm/>
             </div>
