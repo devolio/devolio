@@ -190,6 +190,12 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_BLACKLIST = [
+                                'devolio','devchat', 'about',
+                                'settings', 'signup', 'login',
+                                'root', 'admin', 'administrator']
 
 # auth
 LOGIN_URL = '/users/login/'
@@ -220,3 +226,8 @@ EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+SERVER_EMAIL = 'hello@devolio.net'
+ADMINS = [('Mustafa Abdelhai', 'mustafa@devolio.net')]
+DEFAULT_FROM_EMAIL = 'hello@devolio.net'
+EMAIL_TIMEOUT = 1000
