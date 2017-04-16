@@ -54,7 +54,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.slack',
-    'taggit'
+    'taggit',
+    'raven.contrib.django.raven_compat'
 ]
 
 INSTALLED_APPS = [
@@ -203,4 +204,13 @@ SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
 from firebase import firebase
 
 SLACK_SLACK2DEVOLIO_TOKEN = os.environ.get('SLACK_SLACK2DEVOLIO_TOKEN')
+
+import raven
+
+RAVEN_DSN = os.environ.get('RAVEN_DSN')
+if RAVEN_DSN:
+    RAVEN_CONFIG = {
+        'dsn': RAVEN_DSN,
+        'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+    }
 
