@@ -116,13 +116,17 @@ Have a nice day!
 def new_response_email(sender, instance, **kwargs):
     """
     Sends an email of new responses to the question author.
+    instance == Response instance
     """
     email = instance.question.user.email
     ques = instance.question
+    resp_count = len(ques.response_set.all())
 
-    # if the question author has an email and the question has less than
-    # 3 responses then send them and email.
-    if email and len(ques.response_set.all()) < 3:
+
+    # Send the question author a response notification if the they have
+    # an email address and the question has less than 3 responses then.
+
+    if email and resp_count < 3 and instance.user != ques.user:
         return send_mail(
             subject='New response for {}'.format(ques.title),
             message=REPLY_EMAIL.format(
