@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '97C%k7bxb8f3@UKV7BTHqdXWrkSRk^CMYyxSX@WNept')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,8 +36,7 @@ ALLOWED_HOSTS = [
     'next.devolio.net',
     'devolioapp.herokuapp.com',
     '127.0.0.1',
-    'localhost',
-    '43edb797.ngrok.io'
+    'localhost'
     ]
 
 
@@ -65,8 +64,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 
-    # This is fot WhiteNoise but it should
-    # come brfore 'django.contrib.staticfiles'
+    # This is for WhiteNoise but it should
+    # come before 'django.contrib.staticfiles'
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     # DJ Site framework, added for 'django-allauth'
@@ -202,7 +201,7 @@ LOGIN_URL = '/users/login/'
 LOGOUT_URL = '/users/logout/'
 LOGIN_REDIRECT_URL = '/dashboard'
 
-BASE_URL = 'https://beta.devolio.net'
+BASE_URL = 'https://devolio.net'
 SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
 
 

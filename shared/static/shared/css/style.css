@@ -216,8 +216,9 @@ button, [type="submit"], .button {
     line-height: 1.2em;
 }
 
-.responses-wrapper a, .question-wrapper a {
+.response a, .question-wrapper a {
     padding-bottom: 0px;
     border-bottom: 2px solid #ccc;
+
 
 }
