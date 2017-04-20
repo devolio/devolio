@@ -32,7 +32,7 @@ class Profile(models.Model):
     code_url = models.URLField('Code URL (eg. GitHub)', blank=True)
     website = models.URLField('Eg. Website, Twitter, portfolio', blank=True)
 
-    
+
 
     slug = models.SlugField()
 
@@ -69,13 +69,15 @@ class Profile(models.Model):
 def add_slack_handle(request, sociallogin, **kwargs):
     slack_handle = sociallogin.account.extra_data.get('name')
     if slack_handle:
-        u = Profile.objects.get(user=sociallogin.user)
-        u.slack_handle = slack_handle
-        u.save()
+        Profile.objects.get_or_create(
+            user=sociallogin.user,
+            slack_handle=slack_handle
+            )
 
 
 @receiver(social_account_removed)
 def remove_slack_handle(request, socialaccount, **kwargs):
-    u = Profile.objects.get(user=socialaccount.user)
-    u.slack_handle = ''
-    u.save()
+    Profile.objects.get_or_create(
+        user=socialaccount.user,
+        slack_handle=''
+        )
