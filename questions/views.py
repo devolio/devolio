@@ -18,9 +18,8 @@ from taggit.models import Tag
 from slackclient import SlackClient
 from annoying.functions import get_object_or_this
 
-from firebase import FIREBASE_JS_CONFIG
+from firebase import firebase, FIREBASE_JS_CONFIG
 from devolio.settings import (
-    firebase,
     SLACK_SLACK2DEVOLIO_TOKEN,
     SLACK_TOKEN,
     BASE_URL

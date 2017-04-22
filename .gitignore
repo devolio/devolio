@@ -107,3 +107,4 @@ node_modules/
 .idea/
 
 *-firebase-adminsdk-*.json
+dev/env

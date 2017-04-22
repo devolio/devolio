@@ -184,7 +184,7 @@ SITE_ID = 1
 ACCOUNT_ADAPTER = 'users.allauth.AccountAdapter'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_VERIFICATION = 'optional' # other options: 'none' and 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'  # other options: 'none' and 'mandatory'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_PRESERVE_USERNAME_CASING = False
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
@@ -192,9 +192,10 @@ ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_USERNAME_BLACKLIST = [
-                                'devolio','devchat', 'about',
-                                'settings', 'signup', 'login',
-                                'root', 'admin', 'administrator']
+    'devolio', 'devchat', 'about',
+    'settings', 'signup', 'login',
+    'root', 'admin', 'administrator'
+]
 
 # auth
 LOGIN_URL = '/users/login/'
@@ -202,25 +203,22 @@ LOGOUT_URL = '/users/logout/'
 LOGIN_REDIRECT_URL = '/dashboard'
 
 BASE_URL = 'https://devolio.net'
+
+# Token for sending messages to Slack
 SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
 
-
-### Firebase ###
-from firebase import firebase
-
+# Token for making sure incoming Slack messages are actually coming from Slack
 SLACK_SLACK2DEVOLIO_TOKEN = os.environ.get('SLACK_SLACK2DEVOLIO_TOKEN')
 
-### Sentry ###
-import raven
-
+# Sentry #
 RAVEN_DSN = os.environ.get('RAVEN_DSN')
 if RAVEN_DSN:
     RAVEN_CONFIG = {
         'dsn': RAVEN_DSN,
     }
 
-### Email/Sendgrid ###
-EMAIL_HOST =  os.environ.get('SENDGRID_HOST')
+# Email/Sendgrid #
+EMAIL_HOST = os.environ.get('SENDGRID_HOST')
 EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 EMAIL_PORT = 587
