@@ -1,7 +1,7 @@
 import json
 
-from django.shortcuts import render, redirect
-from django.views.generic import CreateView, DetailView, UpdateView, ListView
+from django.shortcuts import render
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
-from users.models import Profile
 from .models import Question, Response
 
 from taggit.models import Tag
@@ -24,7 +23,6 @@ from devolio.settings import (
     SLACK_TOKEN,
     BASE_URL
     )
-
 
 
 def send_to_firebase(reply):
@@ -88,8 +86,7 @@ class QuestionDetailView(DetailView):
 
 
 def tag_questions_list(request, slug):
-    return render(request, 'questions/questions_list.html',
-        {
+    return render(request, 'questions/questions_list.html', {
         'questions': Question.objects.filter(tags__name=slug).order_by('-created'),
         'tag_name': Tag.objects.get(slug=slug).name,
         'tags': Tag.objects.all().order_by('name'),
@@ -118,11 +115,11 @@ def new_response(request):
 
 
 def questions_list(request):
-    return render(request, 'questions/questions_list.html',
-        {
+    return render(request, 'questions/questions_list.html',{
         'questions': paginate(Question.objects.all().order_by('-created'), 20, request),
         'tags': Tag.objects.all().order_by('name')
         })
+
 
 HELP_MSG = """
 Hi {}, *@devolio* helps you publish your question on Devolio.
@@ -154,14 +151,9 @@ def slack_msg(text, channel):
     """
     if SLACK_TOKEN:
         sc = SlackClient(SLACK_TOKEN)
-        sc.api_call(
-        "chat.postMessage",
-        channel=channel,
-        text=text
-        )
+        sc.api_call("chat.postMessage", channel=channel, text=text)
 
     return HttpResponse('ok')
-
 
 
 def slack_question_msg(question):
@@ -180,9 +172,9 @@ def slack_question(question, channel):
     if SLACK_TOKEN:
         sc = SlackClient(SLACK_TOKEN)
         sc.api_call(
-        "chat.postMessage",
-        channel=channel,
-        attachments=[slack_question_msg(question)]
+            "chat.postMessage",
+            channel=channel,
+            attachments=[slack_question_msg(question)]
         )
 
 
@@ -227,22 +219,26 @@ def slack2devolio(request):
     trigger_word = payload.get('trigger_word')
 
     raw_msg = payload.get('text')
-    msg = raw_msg[len(trigger_word):] # remove the trigger word from the msg
+    msg = raw_msg[len(trigger_word):]  # remove the trigger word from the msg
 
     if not msg or msg.strip() == 'help':
-         return slack_msg(HELP_MSG.format(slack_username), channel_name)
+        return slack_msg(HELP_MSG.format(slack_username), channel_name)
 
     if len(msg) < 30:
-        return slack_msg('The question is too short. Type `@devolio help` for help.',
-                        channel_name)
+        return slack_msg(
+            'The question is too short. Type `@devolio help` for help.',
+            channel_name
+            )
 
     q = Question()
 
     # get and validate title
     q.title = parse_title(msg)
     if not q.title:
-        return slack_msg('The message title is too short. Type `@devolio help` for help.',
-                        channel_name)
+        return slack_msg(
+            'The message title is too short. Type `@devolio help` for help.',
+            channel_name
+            )
 
     # the body
     q.body_md = '' if msg == q.title else msg.replace(q.title, '')

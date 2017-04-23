@@ -1,4 +1,4 @@
-## Firebase Server creds ##
+# Firebase Server creds
 FIREBASE_CONFIG_DEV = {
     "apiKey": "AIzaSyAfkpSJ0GRhaTVFEXoZnVeBqTOiqBPa61M",
     "authDomain": "devolio-comments.firebaseapp.com",
@@ -17,7 +17,7 @@ FIREBASE_CONFIG_PROD = {
     "messagingSenderId": "1093534439808"
 }
 
-## Firebase client creds ##
+# Firebase client creds
 FIREBASE_JS_CONFIG_DEV = {
     "apiKey": "AIzaSyAfkpSJ0GRhaTVFEXoZnVeBqTOiqBPa61M",
     "authDomain": "devolio-comments.firebaseapp.com",

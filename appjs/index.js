@@ -3,7 +3,6 @@ import firebase from 'firebase/app';
 import database from 'firebase/database';
 
 
-
 const dvdata = window.DEVOLIO_DATA;
 
 // Initialize Firebase

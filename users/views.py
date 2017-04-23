@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin
-from .models import *
+from .models import Profile
 from questions.models import Question
 from questions.views import paginate
 
@@ -17,7 +17,7 @@ def dashboard(request):
 
     context = dict()
     context['questions'] = Question.objects.filter(user=user)
-    
+
     return render(request, 'users/dashboard.html', context)
 
 
@@ -27,8 +27,7 @@ def public_profile(request, slug):
         Question.objects.filter(user__username=slug).order_by('-created'),
         5, request)
 
-    return render(request, 'users/public_profile.html',
-        {
+    return render(request, 'users/public_profile.html', {
         'user': user,
         'questions': questions
         })
@@ -44,7 +43,7 @@ class ProfileCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(ProfileCreateView, self).form_valid(form)
-    
+
     def dispatch(self, request, *args, **kwargs):
         try:
             slug = request.user.profile.slug

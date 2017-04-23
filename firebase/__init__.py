@@ -15,19 +15,19 @@ if os.environ.get('HEROKU_RT'):
 
 class CustomFirebase(Firebase):
     scopes = [
-    'https://www.googleapis.com/auth/firebase.database',
-    'https://www.googleapis.com/auth/userinfo.email',
-    "https://www.googleapis.com/auth/cloud-platform"
+        'https://www.googleapis.com/auth/firebase.database',
+        'https://www.googleapis.com/auth/userinfo.email',
+        "https://www.googleapis.com/auth/cloud-platform"
     ]
 
     fb_key = os.environ.get('FIREBASE_PRIVATE_KEY') or ''
     signer = Signer.from_string(fb_key.replace('\\n', '\n'))
 
     creds = {
-    'scopes': scopes,
-    'signer': signer,
-    'service_account_email': os.environ.get('FIREBASE_CLIENT_EMAIL'),
-    'private_key_id': os.environ.get('FIREBASE_PRIVATE_KEY_ID')
+        'scopes': scopes,
+        'signer': signer,
+        'service_account_email': os.environ.get('FIREBASE_CLIENT_EMAIL'),
+        'private_key_id': os.environ.get('FIREBASE_PRIVATE_KEY_ID')
 
     }
 
@@ -35,6 +35,5 @@ class CustomFirebase(Firebase):
         super(CustomFirebase, self).__init__(config)
         self.credentials = SAC(**self.creds)
 
+
 firebase = CustomFirebase(FIREBASE_CONFIG)
-
-

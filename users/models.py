@@ -20,19 +20,23 @@ class Profile(models.Model):
 
     summary = models.TextField(max_length=256, blank=True)
 
-    good_skills = TaggableManager("My Good Skills", through=GoodSkillTag,
-            blank=True, related_name="user_good_skill")
-    learning_skills = TaggableManager("Skills I'm still learning",
-            through=LearningSkillTag,
-            blank=True, related_name="user_learning_skill")
-
+    good_skills = TaggableManager(
+        "My Good Skills",
+        through=GoodSkillTag,
+        blank=True,
+        related_name="user_good_skill"
+        )
+    learning_skills = TaggableManager(
+        "Skills I'm still learning",
+        through=LearningSkillTag,
+        blank=True,
+        related_name="user_learning_skill"
+        )
 
     slack_handle = models.CharField(blank=True, max_length=50)
 
     code_url = models.URLField('Code URL (eg. GitHub)', blank=True)
     website = models.URLField('Eg. Website, Twitter, portfolio', blank=True)
-
-
 
     slug = models.SlugField()
 

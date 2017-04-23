@@ -15,8 +15,6 @@ from utils.slugger import unique_slugify
 from devolio.settings import SLACK_TOKEN, BASE_URL
 
 
-
-
 class Question(models.Model):
     user = models.ForeignKey(User)
 
@@ -98,10 +96,10 @@ def post2slack(sender, instance, **kwargs):
     if SLACK_TOKEN:
         sc = SlackClient(SLACK_TOKEN)
         sc.api_call(
-        "chat.postMessage",
-        channel="#devolio_questions",
-        attachments=[slack_msg(instance)]
-        )
+            "chat.postMessage",
+            channel="#devolio_questions",
+            attachments=[slack_msg(instance)]
+            )
 
 
 REPLY_EMAIL = """
@@ -111,6 +109,7 @@ View it here: {}
 \n
 Have a nice day!
 """
+
 
 @receiver(post_save, sender=Response)
 def new_response_email(sender, instance, **kwargs):
@@ -122,10 +121,8 @@ def new_response_email(sender, instance, **kwargs):
     ques = instance.question
     resp_count = len(ques.response_set.all())
 
-
     # Send the question author a response notification if the they have
     # an email address and the question has less than 3 responses then.
-
     if email and resp_count < 3 and instance.user != ques.user:
         return send_mail(
             subject='New response for {}'.format(ques.title),
