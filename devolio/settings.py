@@ -228,3 +228,6 @@ SERVER_EMAIL = 'hello@devolio.net'
 ADMINS = [('Mustafa Abdelhai', 'mustafa@devolio.net')]
 DEFAULT_FROM_EMAIL = 'hello@devolio.net'
 EMAIL_TIMEOUT = 1000
+
+# django-taggit
+TAGGIT_CASE_INSENSITIVE = True

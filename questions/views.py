@@ -87,7 +87,7 @@ class QuestionDetailView(DetailView):
 
 def tag_questions_list(request, slug):
     return render(request, 'questions/questions_list.html', {
-        'questions': Question.objects.filter(tags__name=slug).order_by('-created'),
+        'questions': Question.objects.filter(tags__slug=slug).order_by('-created'),
         'tag_name': Tag.objects.get(slug=slug).name,
         'tags': Tag.objects.all().order_by('name'),
         })
