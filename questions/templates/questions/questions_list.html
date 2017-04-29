@@ -18,11 +18,21 @@
         <div class="q-item">
             <h2><a href="{% url 'q_detail' q.slug %}">{{q.title}}</a></h2>
 
-            <div class="q-meta">By <strong><a href="{% url 'public_profile' q.user.username %}">@{{q.user}}</a></strong> in 
+            <div class="q-meta">By <strong><a href="{% url 'public_profile' q.user.username %}">@{{q.user}}</a></strong> in
                 {% for tag in q.tags.all %}
                 <a href="{% url 'tags_tag' tag.slug %}" class="q-tag">{{tag.name}}</a>
                 {% endfor %}
-                | <span>{{q.response_set.all|length}} responses</span>
+                | <span>
+                    {% with q.response_set.all|length as num %}
+                    {% if num > 1 %}
+                    {{num}} responses
+                    {% elif num == 0 %}
+                    <a href="{% url 'q_detail' q.slug %}">Submit your response!</a>
+                    {% else %}
+                    {{num}} response
+                    {% endif %}
+                    {% endwith %}
+                    </span>
             </div>
         </div>
     {% endfor %}
@@ -47,7 +57,7 @@
       <a href="?page={{ pagenum }}" class="p-pag-nr p-pag-current">{{pagenum}}</a>
       {% endif %}
       {% endfor %}
-      
+
       {% if questions.has_next %}
       <a href="?page={{ questions.next_page_number }}" class="p-pag-nr">›</a>
       {% endif %}
