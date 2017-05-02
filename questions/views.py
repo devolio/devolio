@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import ModelFormMixin
 from django.contrib.auth.decorators import login_required
@@ -17,22 +17,11 @@ from taggit.models import Tag
 from slackclient import SlackClient
 from annoying.functions import get_object_or_this
 
-from firebase import firebase, FIREBASE_JS_CONFIG
 from devolio.settings import (
     SLACK_SLACK2DEVOLIO_TOKEN,
     SLACK_TOKEN,
     BASE_URL
     )
-
-
-def send_to_firebase(reply):
-    thread = "question-responses/{}".format(reply.question.id)
-    firebase.database().child(thread).push({
-                "body": reply.body_html,
-                "user": reply.user.username,
-                "user_id": reply.user.id,
-                "reply_db_id": reply.id
-        })
 
 
 def paginate(qs, size, request):
@@ -79,7 +68,7 @@ class QuestionDetailView(DetailView):
         context = super(QuestionDetailView, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         context['responses'] = Response.objects.filter(question__slug=slug)
-        context['firebase_config'] = json.dumps(FIREBASE_JS_CONFIG)
+        context['is_question'] = True
         return context
 
     template_name = "questions/question_detail.html"
@@ -94,28 +83,24 @@ def tag_questions_list(request, slug):
 
 
 @login_required
-def new_response(request):
+def create_response(request):
+    """Receives a post request and creates a response for a specific question"""
+    q = None
+    if request.POST:
+        r = Response()
+        r.body_md = request.POST.get('body')  # The body (Markdown)
+        if r.body_md.strip():  # if body is not empty. TODO: more validation
+            r.user = request.user
+            q = Question.objects.get(id=request.POST.get('qid'))
+            r.question = q  # Response <> Question association
+            r.save()
 
-    data = json.loads(request.body)
-
-    if not data.get('qid') or not data.get('body'):
-        return HttpResponse('Some/all data is missing. Or server error.', status=400)
-
-    r = Response()
-    r.user = request.user
-    question = Question.objects.get(id=data.get('qid'))
-    r.question = question
-    r.body_md = data.get('body')
-    r.save()
-
-    # push to firebase
-    send_to_firebase(r)
-
-    return HttpResponse('Response successful.')
+    slug = q.slug if q else request.META.get('HTTP_REFERER').split('/')[-1]
+    return redirect('q_detail', slug)
 
 
 def questions_list(request):
-    return render(request, 'questions/questions_list.html',{
+    return render(request, 'questions/questions_list.html', {
         'questions': paginate(Question.objects.all().order_by('-created'), 20, request),
         'tags': Tag.objects.all().order_by('name')
         })

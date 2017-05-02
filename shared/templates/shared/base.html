@@ -16,9 +16,8 @@
         {% block content %}
         {% endblock %}
         </div>
-        {% if firebase_config %}
+        {% if is_question %}
         <script src="{% static 'shared/js/prism.js' %}"></script>
-        <script src="{% static 'shared/js/app.js' %}"></script>
         {% endif %}
 
 

@@ -1,6 +1,5 @@
 # Run development server on localhost:8000
 s:
-	node_modules/.bin/webpack -w & \
 	./manage.py runserver
 
 # Run development server on 0.0.0.0:8000
