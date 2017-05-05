@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^ask$', qv.QuestionCreateView.as_view(), name="ask"),
     url(r'^questions$', qv.questions_list, name="questions"),
     url(r'^create_response$', qv.create_response, name="create_response"),
+    url(r'^response_reaction$', qv.response_reaction, name="response_reaction"),
     url(r'^slack2devolio$', qv.slack2devolio, name="slack2devolio"),
     url(r'^$', wv.index, name='ws_index')
 ]

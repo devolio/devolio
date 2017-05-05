@@ -9,13 +9,13 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
-from .models import Question, Response
+from .models import Question, Response, ResponseReaction
 
 from taggit.models import Tag
 from slackclient import SlackClient
-from annoying.functions import get_object_or_this
+from annoying.functions import get_object_or_this, get_object_or_None
 
 from devolio.settings import (
     SLACK_SLACK2DEVOLIO_TOKEN,
@@ -69,6 +69,7 @@ class QuestionDetailView(DetailView):
         slug = self.kwargs['slug']
         context['responses'] = Response.objects.filter(question__slug=slug)
         context['is_question'] = True
+
         return context
 
     template_name = "questions/question_detail.html"
@@ -95,6 +96,9 @@ def create_response(request):
             r.question = q  # Response <> Question association
             r.save()
 
+            # Add the first 'self-upvote'
+            ResponseReaction(user=request.user, response=r).save()
+
     slug = q.slug if q else request.META.get('HTTP_REFERER').split('/')[-1]
     return redirect('q_detail', slug)
 
@@ -104,6 +108,32 @@ def questions_list(request):
         'questions': paginate(Question.objects.all().order_by('-created'), 20, request),
         'tags': Tag.objects.all().order_by('name')
         })
+
+
+def response_reaction(request):
+    """Handles upvoting responses"""
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponse(status=401)
+
+    rid = json.loads(request.body).get('rid')
+    if not rid:
+        return HttpResponse(status=400)
+
+    action = 'inc'
+    response = Response.objects.get(id=rid)
+
+    # Clicking the upovote button either adds an upvote or removes it
+    try:
+        # If the user already upvoted a response, then delete it
+        ResponseReaction.objects.get(user=user, response=response).delete()
+        action = 'dec'
+    except ResponseReaction.DoesNotExist:
+        # ...else create a new 'upvote'
+        ResponseReaction(user=request.user, response=response).save()
+
+    # We will send back the response ID and the action (inc||dec) for the JS app
+    return JsonResponse({'rid': rid, 'action': action})
 
 
 HELP_MSG = """

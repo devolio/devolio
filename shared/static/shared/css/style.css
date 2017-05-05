@@ -216,9 +216,22 @@ button, [type="submit"], .button {
     line-height: 1.2em;
 }
 
+.response {
+    padding: 15px;
+}
+
 .response a, .question-wrapper a {
     padding-bottom: 0px;
     border-bottom: 2px solid #ccc;
+}
 
+.response-header {
+    display: flex;
+    justify-content: space-between;
+}
 
+.upvote {
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 3px;
+    cursor: pointer;
 }

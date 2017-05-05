@@ -7,6 +7,8 @@ s2:
 	node_modules/.bin/webpack -w & \
 	./manage.py runserver 0.0.0.0:8000
 
+shell:
+	./manage.py shell
 # Build and minify JS
 build:
 	node_modules/.bin/webpack -p &&\

@@ -71,6 +71,25 @@ class Response(models.Model):
     def __str__(self):
         return "Response to {}".format(self.question)
 
+    @property
+    def likes(self):
+        return self.responsereaction_set.all().count()
+
+
+class ResponseReaction(models.Model):
+    user = models.ForeignKey(User)
+    response = models.ForeignKey(Response)
+    kind = models.IntegerField(default=1)
+    date_added = models.DateTimeField(auto_now_add=True, null=True,
+                                      blank=True, editable=False,
+                                      verbose_name='Date added')
+    last_modified = models.DateTimeField(auto_now=True, null=True,
+                                         blank=True,
+                                         verbose_name='Last modified')
+
+    def __unicode__(self):
+        return f"{self.user} likes {self.response}"
+
 
 def full_url(path):
     return "{}{}".format(BASE_URL, path)
