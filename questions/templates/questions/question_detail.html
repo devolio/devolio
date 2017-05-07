@@ -32,7 +32,9 @@ in {% for tag in object.tags.all %}{{tag.name}} {% endfor %}
             <a href="/@{{r.user}}"><strong>@{{r.user}}</strong></a>
             <div class="upvote" data-rid="{{r.id}}" ><span>▲</span><span id="rid-count-{{r.id}}">{{r.likes}}</span></div>
         </div>
-            <p>{{r.body_html|safe}}</p>
+        <div class="response-content">
+            {{r.body_html|safe}}
+        </div>
 
         </div>
         {% endfor %}
