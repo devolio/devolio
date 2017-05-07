@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin
 from .models import Profile
-from questions.models import Question, Response
+from questions.models import Question
 from questions.views import paginate
 
 
