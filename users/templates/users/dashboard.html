@@ -20,7 +20,7 @@
     </p>
 
     <p>
-    <h3>Your questions:</h3>
+    <h3>My Questions:</h3>
         {% if questions%}
         <ul>
             {%  for question in questions %}
@@ -32,6 +32,16 @@
         {% endif %}
 
     </p>
+    {% if responded_to_qs %}
+    <p>
+    <h3>Questions I responded to:</h3>
+        <ul>
+            {%  for question in responded_to_qs %}
+        <li><a href="/q/{{question.slug}}">{{ question.title|title }}</a></li>
+            {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
 
 </div>
 

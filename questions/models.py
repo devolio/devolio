@@ -177,7 +177,7 @@ Have a nice day!
 
 @receiver(post_save, sender=Response)
 def notify_mention(sender, instance, created, **kwargs):
-    if not created:
+    if not created or settings.OFFLINE_DEV:
         # If this was only an update (!created), then do nothing
         return
 

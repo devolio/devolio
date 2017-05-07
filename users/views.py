@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.edit import ModelFormMixin
 from .models import Profile
-from questions.models import Question
+from questions.models import Question, Response
 from questions.views import paginate
 
 
@@ -17,6 +17,7 @@ def dashboard(request):
 
     context = dict()
     context['questions'] = Question.objects.filter(user=user)
+    context['responded_to_qs'] = Question.objects.filter(response__user=user).distinct()
 
     return render(request, 'users/dashboard.html', context)
 
