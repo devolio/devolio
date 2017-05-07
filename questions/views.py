@@ -63,7 +63,7 @@ class QuestionDetailView(DetailView):
         context = super(QuestionDetailView, self).get_context_data(**kwargs)
         slug = self.kwargs['slug']
         context['responses'] = Response.objects.filter(question__slug=slug)\
-            .order_by('-created')
+            .order_by('created')
         context['is_question'] = True
 
         return context
