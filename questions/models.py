@@ -59,10 +59,12 @@ class Response(models.Model):
     answer = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
 
-    date_added = models.DateTimeField(auto_now_add=True, null=True, blank=True,
-                                      editable=False, verbose_name='Date added')
-    last_modified = models.DateTimeField(auto_now=True, null=True, blank=True,
-                                         verbose_name='Last modified')
+    created = models.DateTimeField(
+        auto_now_add=True, null=True, blank=True,
+        editable=False, verbose_name='Date added')
+    updated = models.DateTimeField(
+        auto_now=True, null=True, blank=True,
+        verbose_name='Last modified')
 
     def save(self, *args, **kwargs):
         self.body_html = mistune.markdown(self.body_md)
