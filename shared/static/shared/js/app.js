@@ -28,7 +28,7 @@
         if (res.ok) {
             res.text().then(handleUpvotes);
         } else {
-            console.log(res.statusText);
+            print(res.statusText);
         }
     };
 

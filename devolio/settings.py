@@ -25,6 +25,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# When I have slow or no internet :/
+OFFLINE_DEV = os.environ.get('MA_OFFLINE_DEV', False)
+
 HEROKU_RT = os.environ.get('HEROKU_RT')
 
 if HEROKU_RT:
@@ -96,6 +99,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'devolio.context_processors.offline_dev'
             ],
         },
     },

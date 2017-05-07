@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>{% block head_title %}Welcome to the new Devolio{% endblock %}</title>
-        <script src="https://use.typekit.net/onc4rxd.js"></script>
+        {% if not OFFLINE_DEV %}<script src="https://use.typekit.net/onc4rxd.js"></script>{% endif %}
         <script>try{Typekit.load({ async: true });}catch(e){}</script>
         <link rel="icon" type="image/x-icon" href="{% static 'shared/img/D_32_transparent.png' %}">
         <link rel="stylesheet" href="{% static 'shared/css/normalize.css' %}">

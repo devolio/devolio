@@ -15,13 +15,8 @@ from .models import Question, Response, ResponseReaction
 
 from taggit.models import Tag
 from slackclient import SlackClient
-from annoying.functions import get_object_or_this, get_object_or_None
-
-from devolio.settings import (
-    SLACK_SLACK2DEVOLIO_TOKEN,
-    SLACK_TOKEN,
-    BASE_URL
-    )
+from annoying.functions import get_object_or_this
+from django.conf import settings
 
 
 def paginate(qs, size, request):
@@ -164,8 +159,8 @@ def slack_msg(text, channel):
     """
     Sends a message back to the channel the original msg came from.
     """
-    if SLACK_TOKEN:
-        sc = SlackClient(SLACK_TOKEN)
+    if settings.SLACK_TOKEN:
+        sc = SlackClient(settings.SLACK_TOKEN)
         sc.api_call("chat.postMessage", channel=channel, text=text)
 
     return HttpResponse('ok')
@@ -175,17 +170,17 @@ def slack_question_msg(question):
     return {
         "title": question.title,
         "author_name": "@{}".format(question.user.username),
-        "author_link": "{}/@{}".format(BASE_URL, question.user.username),
+        "author_link": "{}/@{}".format(settings.BASE_URL, question.user.username),
         "color": "#f78250",
-        "title_link": "{}{}".format(BASE_URL, question.get_absolute_url()),
+        "title_link": "{}{}".format(settings.BASE_URL, question.get_absolute_url()),
         "pretext": "Ok, I published your question on Devolio!",
         "footer": "devolio.net",
         }
 
 
 def slack_question(question, channel):
-    if SLACK_TOKEN:
-        sc = SlackClient(SLACK_TOKEN)
+    if settings.SLACK_TOKEN:
+        sc = SlackClient(settings.SLACK_TOKEN)
         sc.api_call(
             "chat.postMessage",
             channel=channel,
@@ -226,7 +221,7 @@ def slack2devolio(request):
     payload = request.POST
 
     # make sure the request is coming from Slack
-    if payload.get('token') != SLACK_SLACK2DEVOLIO_TOKEN:
+    if payload.get('token') != settings.SLACK_SLACK2DEVOLIO_TOKEN:
         return HttpResponse('Wrong token.', status=401)
 
     slack_username = payload.get('user_name')

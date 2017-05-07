@@ -12,7 +12,7 @@ import mistune
 from slackclient import SlackClient
 
 from utils.slugger import unique_slugify
-from devolio.settings import SLACK_TOKEN, BASE_URL
+from django.conf import settings
 
 
 class Question(models.Model):
@@ -92,14 +92,14 @@ class ResponseReaction(models.Model):
 
 
 def full_url(path):
-    return "{}{}".format(BASE_URL, path)
+    return "{}{}".format(settings.BASE_URL, path)
 
 
 def slack_msg(instance):
     return {
         "title": instance.title,
         "author_name": "@{}".format(instance.user.username),
-        "author_link": "{}/@{}".format(BASE_URL, instance.user.username),
+        "author_link": "{}/@{}".format(settings.BASE_URL, instance.user.username),
         "color": "#f78250",
         "title_link": full_url(instance.get_absolute_url()),
         "pretext": "New question!",
@@ -108,17 +108,19 @@ def slack_msg(instance):
 
 
 @receiver(post_save, sender=Question)
-def post2slack(sender, instance, **kwargs):
+def post2slack(sender, instance, created, **kwargs):
     """
     Sends every new question to the #devolio_questions channel on Slack.
     """
-    if SLACK_TOKEN:
-        sc = SlackClient(SLACK_TOKEN)
-        sc.api_call(
-            "chat.postMessage",
-            channel="#devolio_questions",
-            attachments=[slack_msg(instance)]
-            )
+    if not created or not settings.SLACK_TOKEN or settings.OFFLINE_DEV:
+        return
+
+    sc = SlackClient(settings.SLACK_TOKEN)
+    sc.api_call(
+        "chat.postMessage",
+        channel="#devolio_questions",
+        attachments=[slack_msg(instance)]
+        )
 
 
 REPLY_EMAIL = """
@@ -131,14 +133,17 @@ Have a nice day!
 
 
 @receiver(post_save, sender=Response)
-def new_response_email(sender, instance, **kwargs):
+def new_response_email(sender, instance, created, **kwargs):
     """
     Sends an email of new responses to the question author.
     instance == Response instance
     """
+    if settings.OFFLINE_DEV or created:
+        return
+
     email = instance.question.user.email
     ques = instance.question
-    resp_count = len(ques.response_set.all())
+    resp_count = ques.response_set.count()
 
     # Send the question author a response notification if the they have
     # an email address and the question has less than 3 responses then.

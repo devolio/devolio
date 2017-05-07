@@ -2,6 +2,9 @@
 s:
 	./manage.py runserver
 
+so:
+	export MA_OFFLINE_DEV=True && ./manage.py runserver
+
 # Run development server on 0.0.0.0:8000
 s2:
 	node_modules/.bin/webpack -w & \
