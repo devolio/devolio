@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -140,7 +142,7 @@ def new_response_email(sender, instance, created, **kwargs):
     Sends an email of new responses to the question author.
     instance == Response instance
     """
-    if settings.OFFLINE_DEV or created:
+    if settings.OFFLINE_DEV or not created:
         return
 
     email = instance.question.user.email
@@ -150,7 +152,7 @@ def new_response_email(sender, instance, created, **kwargs):
     # Send the question author a response notification if the they have
     # an email address and the question has less than 3 responses then.
     if email and resp_count < 3 and instance.user != ques.user:
-        return send_mail(
+        send_mail(
             subject='New response for {}'.format(ques.title),
             message=REPLY_EMAIL.format(
                 ques.user,
@@ -162,3 +164,51 @@ def new_response_email(sender, instance, created, **kwargs):
             recipient_list=[email],
             fail_silently=True,
             )
+
+
+MENTION_EMAIL = """
+Hi {},\n
+{} just mentioned you on this question: {}\n
+View it here: {}
+\n
+Have a nice day!
+"""
+
+
+@receiver(post_save, sender=Response)
+def notify_mention(sender, instance, created, **kwargs):
+    if not created:
+        # If this was only an update (!created), then do nothing
+        return
+
+    ques = instance.question
+
+    # get all @mentions. TODO: This needs to be optimized by excluding @strings
+    # in <code> and <pre> tags
+    mentions = re.findall('\B@[a-z0-9_-]+', instance.body_md)
+    for mention in mentions:
+        username = mention.replace('@', '')
+        try:
+            user = User.objects.get(username=username)
+            if user == instance.user or not user.email:
+                # if a user mentions themselves or they don't have an email,
+                # then do nothing
+                return
+
+            # Send an email to the user
+            send_mail(
+                subject='Somebody mentioned you on Devolio',
+                message=MENTION_EMAIL.format(
+                    user,
+                    instance.user,
+                    ques.title,
+                    full_url(ques.get_absolute_url())
+                    ),
+                from_email='hello@devolio.net',
+                recipient_list=[user.email],
+                fail_silently=True,
+                )
+
+        except User.DoesNotExist:
+            # Could not find a user with this username
+            pass
