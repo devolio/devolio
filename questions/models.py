@@ -20,7 +20,7 @@ from django.conf import settings
 class Question(models.Model):
     user = models.ForeignKey(User)
 
-    title = models.CharField('Question title', max_length=50, blank=False)
+    title = models.CharField('Question title', max_length=255, blank=False)
     body_md = models.TextField('Question body (Markdown)', blank=True)
     body_html = models.TextField(blank=True)
 
