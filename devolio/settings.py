@@ -225,12 +225,12 @@ if RAVEN_DSN:
 EMAIL_HOST = os.environ.get('SENDGRID_HOST')
 EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
-EMAIL_PORT = 587
+EMAIL_PORT = 465
 EMAIL_USE_TLS = True
 
-SERVER_EMAIL = 'hello@devolio.net'
+SERVER_EMAIL = 'hello@m.devolio.net'
 ADMINS = [('Mustafa Abdelhai', 'mustafa@devolio.net')]
-DEFAULT_FROM_EMAIL = 'hello@devolio.net'
+DEFAULT_FROM_EMAIL = 'hello@m.devolio.net'
 EMAIL_TIMEOUT = 1000
 
 # django-taggit
