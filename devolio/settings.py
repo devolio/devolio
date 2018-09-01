@@ -225,7 +225,7 @@ if RAVEN_DSN:
 EMAIL_HOST = os.environ.get('SENDGRID_HOST')
 EMAIL_HOST_USER = os.environ.get('SENDGRID_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
-EMAIL_PORT = 465
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = True
 
 SERVER_EMAIL = 'hello@m.devolio.net'
