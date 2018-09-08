@@ -1,19 +1,20 @@
-# Run development server on localhost:8000
-s:
-	./manage.py runserver
+default:
+	cat Makefile
 
-so:
+# Run server that doesn't depend on an internet conenction
+offline:
 	export MA_OFFLINE_DEV=True && ./manage.py runserver
 
 # Run development server on 0.0.0.0:8000
-s2:
-	node_modules/.bin/webpack -w & \
+serve:
 	./manage.py runserver 0.0.0.0:8000
 
-shell:
-	./manage.py shell
+# Django shell
+ds:
+	docker-compose -f dev/compose.yml exec devolio python manage.py shell
+
 # Build and minify JS
-build:
+js:
 	node_modules/.bin/webpack -p &&\
 	node_modules/.bin/uglifyjs \
 	shared/static/shared/js/app.js \
@@ -21,25 +22,34 @@ build:
 
 # Docker stuff
 # Build the base image found in dev/Dockerfile.base (devolio/base)
-build_base:
+base:
 	docker build -t devolio/base - < ./dev/Dockerfile.base
 
 # Build the Devolio Django app itself (devolio/devolio)
-bd:
-	docker build -f ./dev/Dockerfile -t devolio/devolio .
+build:
+	docker-compose -f dev/compose.yml build #--no-cache
 
 # Run the app image itself (devolio/devolio)
-rd:
-	docker run -d -p 8000:8000 --env-file ./dev/env -v ${PWD}:/app \
-	--name devolio devolio/devolio
+up:
+	docker-compose -f dev/compose.yml up -d
+	@echo "##### IMPORTANT COMMANDS #####"
+	@echo "Devolio is successfully running in the background."
+	@echo "Location: http://127.0.0.1:8000/"
+	@echo "To follow the logs, type: make logs"
+	@echo "To stop the server, type: make down"
+	@echo "To use the django shell, type: make dj"
+	@echo "To 'SSH' into the container, type: make shell"
 
-# Kill the devolio container
-kd:
-	docker kill devolio
+run: base build up
 
-# Build the base and app images
-devolio: build_base bd
+down:
+	docker-compose -f dev/compose.yml down
 
 # logs from app inside docker
-dl:
-	docker logs devolio
+logs:
+	docker-compose -f dev/compose.yml logs -f --tail="all"
+
+# "ssh" into the container
+shell:
+	docker-compose -f dev/compose.yml exec devolio bash
+

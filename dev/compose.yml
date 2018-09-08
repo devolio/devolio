@@ -1,0 +1,13 @@
+version: '3'
+services:
+  devolio:
+    build:
+      context: ../
+      dockerfile: ./dev/Dockerfile
+    ports:
+      - 8000:8000
+    env_file:
+      - env
+    volumes:
+      - ../:/devolio
+

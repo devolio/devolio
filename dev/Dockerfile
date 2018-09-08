@@ -1,8 +1,7 @@
-FROM devolio/base
-RUN mkdir /app
-WORKDIR /app
-ADD requirements.txt /app/
+FROM devolio/base:latest
+RUN mkdir /devolio
+WORKDIR /devolio
+ADD . /devolio/
 RUN pip install -r requirements.txt
-ADD . /app/
-EXPOSE 8000
-CMD python manage.py migrate && make s2
+CMD python manage.py migrate && make serve
+
