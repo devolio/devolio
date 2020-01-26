@@ -1,11 +1,11 @@
 brotlipy==0.6.0
 dj-database-url==0.4.2
-Django==1.10.6
+django>=1.11.27
 django-allauth==0.31.0
 django-annoying==0.10.3
 django-taggit==0.22.0
 gunicorn==19.7.0
-mistune==0.7.3
+mistune==0.8.1
 psycopg2==2.7
 Pyrebase==3.0.27
 raven==6.0.0
