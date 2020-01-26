@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{% block head_title %}Welcome to the new Devolio{% endblock %}</title>
+        <title>{% block head_title %}Welcome to the new DevChat{% endblock %}</title>
         {% if not OFFLINE_DEV %}<script src="https://use.typekit.net/onc4rxd.js"></script>{% endif %}
         <script>try{Typekit.load({ async: true });}catch(e){}</script>
         <link rel="icon" type="image/x-icon" href="{% static 'shared/img/D_32_transparent.png' %}">
@@ -20,21 +20,6 @@
         <script src="{% static 'shared/js/prism.js' %}"></script>
         <script src="{% static 'shared/js/app.js' %}"></script>
         {% endif %}
-        <!-- Piwik -->
-        <script type="text/javascript">
-        var _paq = _paq || [];
-        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u="//stats.devolio.net/";
-            _paq.push(['setTrackerUrl', u+'piwik.php']);
-            _paq.push(['setSiteId', '2']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-        </script>
-        <!-- End Piwik Code -->
 
     </body>
 </html>

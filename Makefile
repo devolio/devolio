@@ -33,7 +33,7 @@ build:
 up:
 	docker-compose -f dev/compose.yml up -d
 	@echo "##### IMPORTANT COMMANDS #####"
-	@echo "Devolio is successfully running in the background."
+	@echo "DevChat is successfully running in the background."
 	@echo "Location: http://127.0.0.1:8000/"
 	@echo "To follow the logs, type: make logs"
 	@echo "To stop the server, type: make down"

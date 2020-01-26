@@ -133,9 +133,9 @@ def response_reaction(request):
 
 
 HELP_MSG = """
-Hi {}, *@devolio* helps you publish your question on Devolio.
-It doesn't matter if you have an account on devolio.net but it is _highly_ recommended.
-After signing up, please link your Devolio account to DevChat on Slack (the purple button).
+Hi {}, *@devolio* helps you publish your question on DevChat.dev.
+It doesn't matter if you have an account on devchat.dev but it is _highly_ recommended.
+After signing up, please link your DevChat.dev account to DevChat on Slack (the purple button).
 
 
 *How can I publish my question on Devolio?*:

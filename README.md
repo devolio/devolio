@@ -1,9 +1,9 @@
-# Devolio (WIP)
+# DevChat (WIP)
 
 The project is very new and the code quality is not the best. 
 **Help welcome and wanted. Beginners are very welcome too.**
 
-Check out the [issues][0] to get started. Or ping me @mustafa on [DevChat][1]
+Check out the [issues][0] to get started. Or ping me @mustafa on our [Slack][1]
 
 ## Run on Docker
 
@@ -22,6 +22,6 @@ Check out the [issues][0] to get started. Or ping me @mustafa on [DevChat][1]
 
 Code reloading should be working.
 
-[0]: https://github.com/devolio/devolio/issues
+[0]: https://github.com/devchat-dev/devolio/issues
 [1]: https://devchat.devolio.net/
 [2]: https://docs.docker.com/install/

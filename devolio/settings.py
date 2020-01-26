@@ -36,7 +36,7 @@ if HEROKU_RT:
 ALLOWED_HOSTS = [
     'devolio.net',
     'beta.devolio.net',
-    'next.devolio.net',
+    'devchat.dev',
     'devolioapp.herokuapp.com',
     '127.0.0.1',
     'localhost'

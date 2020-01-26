@@ -1,8 +1,8 @@
 {
-  "name": "Devolio",
+  "name": "devchat",
   "version": "1.0.0",
   "main": "./appjs/index.js",
-  "repository": "git@github.com:devolio/devolio.git",
+  "repository": "git@github.com:devchat-dev/devolio.git",
   "author": "Mustafa Abdelhai <hi@mustafa.li>",
   "license": "GPL-3.0",
   "dependencies": {

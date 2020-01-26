@@ -107,7 +107,7 @@ def slack_msg(instance):
         "color": "#f78250",
         "title_link": full_url(instance.get_absolute_url()),
         "pretext": "New question!",
-        "footer": "devolio.net",
+        "footer": "devchat.dev",
         }
 
 
@@ -197,7 +197,7 @@ def notify_mention(sender, instance, created, **kwargs):
 
             # Send an email to the user
             send_mail(
-                subject='Somebody mentioned you on Devolio',
+                subject='Somebody mentioned you on DevChat.dev',
                 message=MENTION_EMAIL.format(
                     user,
                     instance.user,
